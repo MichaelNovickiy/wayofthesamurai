@@ -1,4 +1,4 @@
-export const Tecnologies = () => {
+export const Main = () => {
     return(
         <div>
             KobraKPSS
