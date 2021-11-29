@@ -9,9 +9,9 @@ export const MyPosts = () => {
             <div>
                 New post
             </div>
-            <Post/>
-            <Post/>
-            <Post/>
+            <Post message='Hi, how are you?' />
+            <Post message='It is my first post' />
+            <Post message='I am a cat' />
         </div>
     )
 }

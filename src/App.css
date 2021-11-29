@@ -1,9 +1,11 @@
 .app-wrapper header img {
     height: 50px;
 }
-.content  img {
+
+.content img {
     height: 200px;
 }
+
 .app-wrapper {
     margin: 0 auto;
     width: 1200px;
@@ -17,3 +19,8 @@
     /*grid-gap: 10px;*/
 }
 
+.app-wrapper-content {
+    background-color: antiquewhite;
+    grid-area: c;
+    color: darkgreen;
+}
