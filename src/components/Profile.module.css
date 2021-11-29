@@ -1,0 +1,12 @@
+.content {
+    grid-area: c;
+    background-color: darkolivegreen;
+}
+
+.imageBack img {
+    width: 100%;
+}
+
+.imageAva img {
+    width: 50px;
+}
