@@ -24,3 +24,12 @@ export let state = {
         ],
     }
 }
+
+export let addPost = (postMessage) => {
+    let newPost ={
+        id: "5",
+        message: postMessage,
+        likecount: '0',
+    };
+    state.profilePage.postData.push(newPost);
+}
