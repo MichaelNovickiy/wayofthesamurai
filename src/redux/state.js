@@ -8,6 +8,7 @@ export let state = {
             {id: '3', message: 'I am a cat', likecount: '7' },
 
         ],
+        newPostText: '',
     },
     messagesPage:{
         dialogData : [
@@ -33,5 +34,9 @@ export let addPost = (postMessage) => {
         likecount: '0',
     };
     state.profilePage.postData.push(newPost);
+    rerenderEntireTree(state);
+}
+export let updateNewPostDate = (newText) => {
+    state.profilePage.newPostText = newText;
     rerenderEntireTree(state);
 }

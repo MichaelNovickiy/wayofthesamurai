@@ -5,6 +5,7 @@ import {Navbar} from "./components/Navbar/Navbar";
 import {Profile} from "./components/Profile/Profile";
 import {Dialogs} from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {updateNewPostDate} from "./redux/state";
 
 
 const App = (props) => {
@@ -16,8 +17,9 @@ const App = (props) => {
                 <div className='app-wrapper-content'>
                     <Routes>
                         <Route path={'/Profile'}
-                               element={<Profile state={props.state.profilePage}
+                               element={<Profile profilePage={props.state.profilePage}
                                                  addPost={props.addPost}
+                                                 updateNewPostDate={props.updateNewPostDate}
                                />}
                         />
                         <Route path={'/Dialogs/*'}
