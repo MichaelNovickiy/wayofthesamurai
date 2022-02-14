@@ -36,12 +36,6 @@ let store ={
         this._callSubscriber = observer;
     },
 
-    addPost () {
-
-    },
-    updateNewPostDate (newText) {
-
-    },
     dispatch(action) { // {type: 'ADD-POST'}
         if (action.type === 'ADD-POST') {
             let newPost = {
