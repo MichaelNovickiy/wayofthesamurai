@@ -28,9 +28,6 @@ export const MyPosts = (props) => {
             <div>
                 <button onClick={addPost}>Add post</button>
             </div>
-            <div>
-                New post
-            </div>
             {postElement}
         </div>
     )
