@@ -1,19 +1,20 @@
 import React from "react";
 import c from './MyPosts.module.css'
-import {Post} from "./Post/Post";
+import {PostWithTS} from "./Post/PostWithTS";
 
 export const MyPosts = (props) => {
 
-    let postElement = props.posts.map(p => <Post id={p.id} message={p.message} like={p.likecount}/>)
+    let postElement = props.posts.map(p => <PostWithTS id={p.id} message={p.message} like={p.likecount}/>)
 
     let newPostElement = React.createRef();
 
     let addPost = () => {
         props.dispatch({type: 'ADD-POST'});
     }
+
     let onPostChange = () => {
         let text = newPostElement.current.value;
-        props.dispatch({type: 'UPGRATE-NEW-POST-DATA' , newText: text});
+        props.dispatch({type: 'UPDATE-NEW-POST-DATA', newText: text});
     }
 
     return (
@@ -23,6 +24,11 @@ export const MyPosts = (props) => {
                 <textarea ref={newPostElement}
                           value={props.newPostText}
                           onChange={onPostChange}
+                          onKeyPress={(event) => {
+                              if (event.key === 'Enter') {
+                                  addPost()
+                              }
+                          }}
                 />
             </div>
             <div>

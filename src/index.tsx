@@ -4,7 +4,7 @@ import store from "./redux/state.js";
 import ReactDOM from 'react-dom';
 import App from './App';
 
-let rerenderEntireTree = (state) => {
+let rerenderEntireTree = (state: any) => {
     ReactDOM.render(
         <React.StrictMode>
             <App state={store.getState()}

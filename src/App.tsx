@@ -5,10 +5,9 @@ import {Navbar} from "./components/Navbar/Navbar";
 import {Profile} from "./components/Profile/Profile";
 import {Dialogs} from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {updateNewPostDate} from "./redux/state";
 
 
-const App = (props) => {
+const App = (props: any) => {
     return (
         <BrowserRouter>
             <div className="app-wrapper">
@@ -21,12 +20,11 @@ const App = (props) => {
                                                  dispatch={props.dispatch}
                                />}
                         />
-                        <Route path={'/Dialogs/*'}
+                        <Route path={'/Dialogs/'}
                                element={<Dialogs state={props.state.messagesPage}
                                />}
                         />
                         {/*новый синтаксис роутев*/}
-
                     </Routes>
                 </div>
             </div>
