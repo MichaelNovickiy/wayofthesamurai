@@ -2,16 +2,15 @@ import React from "react";
 import c from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {addPostAC, sendMessageAC, updateNewMessageBodyAC, updateNewPostTextAC} from "../../redux/state";
+import {sendMessageAC, updateNewMessageBodyAC} from "../../redux/state";
 
 export const Dialogs = (props) => {
 
     let dialogElements = props.state.dialogData.map(d => <DialogItem name={d.name} id={d.id}/>)
     let messageElements = props.state.messageData.map(m => <Message message={m.message} id={m.id}/>)
 
-    let newMessageElement = React.createRef();
-    let onMessageChange = () => {
-        let messageBody = newMessageElement.current.value;
+    let onMessageChange = (e) => {
+        let messageBody = e.target.value;
         props.dispatch(updateNewMessageBodyAC(messageBody));
     }
     let sendMessage = () => {
@@ -25,8 +24,7 @@ export const Dialogs = (props) => {
             </div>
             <div className={c.messages}>
                 {messageElements}
-                <textarea
-                    ref={newMessageElement}
+                <textarea placeholder='Enter your message'
                     value={props.state.newMessageText}
                     onChange={onMessageChange}
                 />

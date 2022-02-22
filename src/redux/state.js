@@ -1,16 +1,17 @@
+import {profileReducer} from "./profile-reducer";
+
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_DATA = 'UPDATE-NEW-POST-DATA'
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY'
 const SEND_MESSAGE = 'SEND_MESSAGE'
 
-let store ={
+let store = {
     _state: {
         profilePage: {
             postData: [
                 {id: '1', message: 'Hi, how are you?', likecount: '2'},
                 {id: '2', message: 'It is my first post', likecount: '4'},
                 {id: '3', message: 'I am a cat', likecount: '7'},
-
             ],
             newPostText: '',
         },
@@ -32,39 +33,22 @@ let store ={
         },
         sideBar: {},
     },
-    _callSubscriber () {
+    _callSubscriber() {
         console.log('State changed');
     },
 
-    getState () {
+    getState() {
         return this._state;
     },
-    subscribe (observer) {
+    subscribe(observer) {
         this._callSubscriber = observer;
     },
 
     dispatch(action) {
-        if (action.type === ADD_POST) {
-            let newPost = {
-                id: 5,
-                message: this._state.profilePage.newPostText,
-                likecount: 2,
-            };
-            this._state.profilePage.postData.push(newPost);
-            this._state.profilePage.newPostText = '';
-            this._callSubscriber(this._state);
-        } else if (action.type === UPDATE_NEW_POST_DATA){
-            this._state.profilePage.newPostText = action.newText;
-            this._callSubscriber(this._state);
-        } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
-            this._state.messagesPage.newMessageText = action.messageBody;
-            this._callSubscriber(this._state);
-        } else if (action.type === SEND_MESSAGE) {
-            let messageBody = this._state.messagesPage.newMessageText;
-            this._state.messagesPage.newMessageText = '';
-            this._state.messagesPage.messageData.push({id: 4, message: messageBody})
-            this._callSubscriber(this._state);
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.messagesPage = profileReducer(this._state.messagesPage, action);
+
+        this._callSubscriber(this._state)
     }
 }
 
