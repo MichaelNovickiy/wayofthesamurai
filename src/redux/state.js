@@ -26,10 +26,11 @@ let store ={
                 {id: 2, message: 'How are you?'},
                 {id: 3, message: 'Yhoho'}
             ],
-        }
+        },
+        sideBar: {},
     },
     _callSubscriber () {
-        console.log('blabla');
+        console.log('State changed');
     },
 
     getState () {
