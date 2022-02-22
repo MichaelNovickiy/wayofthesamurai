@@ -7,12 +7,12 @@ export const MyPosts = (props) => {
 
     let postElement = props.posts.map(p => <PostWithTS id={p.id} message={p.message} like={p.likecount}/>)
 
-    let newPostElement = React.createRef();
+
 
     let addPost = () => {
         props.dispatch(addPostAC());
     }
-
+    let newPostElement = React.createRef();
     let onPostChange = () => {
         let text = newPostElement.current.value;
         props.dispatch(updateNewPostTextAC(text));

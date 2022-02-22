@@ -21,7 +21,7 @@ const App = (props: any) => {
                                />}
                         />
                         <Route path={'/Dialogs/'}
-                               element={<Dialogs state={props.state.messagesPage}
+                               element={<Dialogs state={props.state.messagesPage} dispatch={props.dispatch}
                                />}
                         />
                         {/*новый синтаксис роутев*/}
