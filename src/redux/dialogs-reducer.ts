@@ -9,5 +9,5 @@ export const dialogsReducer = (state: any, action: any) => {
         state.newMessageText = '';
         state.messageData.push({id: 4, message: messageBody})
     }
-return state
+    return state;
 }

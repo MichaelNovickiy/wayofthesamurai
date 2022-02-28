@@ -1,4 +1,5 @@
 import {profileReducer} from "./profile-reducer";
+import {dialogsReducer} from "./dialogs-reducer";
 
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_DATA = 'UPDATE-NEW-POST-DATA'
@@ -46,7 +47,7 @@ let store = {
 
     dispatch(action) {
         this._state.profilePage = profileReducer(this._state.profilePage, action);
-        this._state.messagesPage = profileReducer(this._state.messagesPage, action);
+        this._state.messagesPage = dialogsReducer(this._state.messagesPage, action);
 
         this._callSubscriber(this._state)
     }

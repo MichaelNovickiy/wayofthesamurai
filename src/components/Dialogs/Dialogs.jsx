@@ -9,8 +9,8 @@ export const Dialogs = (props) => {
     let dialogElements = props.state.dialogData.map(d => <DialogItem name={d.name} id={d.id}/>)
     let messageElements = props.state.messageData.map(m => <Message message={m.message} id={m.id}/>)
 
-    let onMessageChange = (e) => {
-        let messageBody = e.target.value;
+    let onMessageChange = (event) => {
+        let messageBody = event.target.value;
         props.dispatch(updateNewMessageBodyAC(messageBody));
     }
     let sendMessage = () => {
