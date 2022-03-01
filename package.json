@@ -11,6 +11,7 @@
     "react-router-app": "^0.1.6",
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
+    "redux": "^4.1.2",
     "typescript": "^4.5.5",
     "web-vitals": "^1.0.1"
   },
@@ -39,8 +40,8 @@
     ]
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.12.1",
-    "@typescript-eslint/parser": "^5.12.1",
+    "@typescript-eslint/eslint-plugin": "5.13.0",
+    "@typescript-eslint/parser": "5.13.0",
     "eslint-config-react": "^1.1.7",
     "eslint-config-react-app": "^6.0.0"
   }
