@@ -3,7 +3,6 @@ import './index.css';
 import store from "./redux/redux-store";
 import ReactDOM from 'react-dom';
 import App from './App';
-import state from "./redux/state";
 
 let rerenderEntireTree = (state: any) => {
     ReactDOM.render(
@@ -15,7 +14,6 @@ let rerenderEntireTree = (state: any) => {
         document.getElementById('root')
     );
 };
-
 
 rerenderEntireTree(store.getState());
 
