@@ -1,22 +1,18 @@
 import React from "react";
 import c from './MyPosts.module.css'
 import {PostWithTS} from "./Post/PostWithTS";
-import {addPostAC, updateNewPostTextAC} from "../../../redux/profile-reducer";
-
 
 export const MyPosts = (props) => {
 
     let postElement = props.posts.map(p => <PostWithTS id={p.id} message={p.message} like={p.likecount}/>)
 
-
-
     let addPost = () => {
-        props.dispatch(addPostAC());
+        props.addPost();
     }
     let newPostElement = React.createRef();
     let onPostChange = () => {
         let text = newPostElement.current.value;
-        props.dispatch(updateNewPostTextAC(text));
+        props.onPostChange(text);
     }
 
     return (

@@ -16,12 +16,11 @@ const App = (props: any) => {
                 <div className='app-wrapper-content'>
                     <Routes>
                         <Route path={'/Profile'}
-                               element={<Profile profilePage={props.state.profilePage}
-                                                 dispatch={props.dispatch}
+                               element={<Profile store={props.store}
                                />}
                         />
                         <Route path={'/Dialogs/'}
-                               element={<Dialogs state={props.state.messagesPage} dispatch={props.dispatch}
+                               element={<Dialogs store={props.store}
                                />}
                         />
                         {/*новый синтаксис роутев*/}
