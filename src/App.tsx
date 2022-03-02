@@ -16,13 +16,9 @@ const App = (props: any) => {
                 <div className='app-wrapper-content'>
                     <Routes>
                         <Route path={'/Profile'}
-                               element={<Profile store={props.store}
-                               />}
-                        />
+                               element={<Profile/>}/>
                         <Route path={'/Dialogs/'}
-                               element={<DialogsContainer store={props.store}
-                               />}
-                        />
+                               element={<DialogsContainer/>}/>
                         {/*новый синтаксис роутев*/}
                     </Routes>
                 </div>

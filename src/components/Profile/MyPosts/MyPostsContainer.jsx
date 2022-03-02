@@ -1,6 +1,7 @@
 import React from "react";
 import {addPostAC, updateNewPostTextAC} from "../../../redux/profile-reducer";
 import {MyPosts} from "./MyPosts";
+import StoreContext from "../../../StoreContext";
 
 export const MyPostsContainer = (props) => {
     debugger
@@ -15,9 +16,13 @@ export const MyPostsContainer = (props) => {
         props.store.dispatch(updateNewPostTextAC(text));
     }
 
-    return (<MyPosts addPost={addPost}
+    return (
+        <StoreContext.Consumer> (
+            (store) =>
+            <MyPosts addPost={addPost}
                      onPostChange={onPostChange}
                      posts={state.profilePage.postData}
                      newPostText={state.profilePage.newPostText}
-    />)
+            />)
+        </StoreContext.Consumer>
 }
