@@ -7,7 +7,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 
 
-const App = (props: any) => {
+let App = (props: any) => {
     return (
         <BrowserRouter>
             <div className="app-wrapper">
