@@ -4,7 +4,6 @@ import store from "./redux/redux-store";
 import ReactDOM from 'react-dom';
 import App from './App';
 import StoreContext from "./StoreContext";
-import { StoreType } from './redux/store';
 
 let rerenderEntireTree = (value: any) => {
     ReactDOM.render(
