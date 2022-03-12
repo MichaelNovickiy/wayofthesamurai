@@ -7,10 +7,10 @@ let initialState = {
         {id: '2', message: 'It is my first post', likecount: '4'},
         {id: '3', message: 'I am a cat', likecount: '7'},
     ],
-        newPostText: '',
+    newPostText: '',
 }
 
-export const profileReducer = (state:any = initialState, action: any) => {
+export const profileReducer = (state: any = initialState, action: any) => {
     switch (action.type) {
         case ADD_POST: {
             let newPost = {
@@ -18,17 +18,17 @@ export const profileReducer = (state:any = initialState, action: any) => {
                 message: state.newPostText,
                 likecount: 0,
             };
-            let stateCopy = {...state}
-            stateCopy.postData = [...state.postData];
-            stateCopy.postData.push(newPost);
-            stateCopy.newPostText = '';
-            return stateCopy;
+            return {
+                ...state,
+                postData: [...state.postData, newPost],
+                newPostText: ''
+            }
         }
         case UPDATE_NEW_POST_DATA: {
-            let stateCopy = {...state}
-            stateCopy.postData = [...state.postData];
-            stateCopy.newPostText = action.newText;
-            return stateCopy;
+            return {
+                ...state,
+                newPostText: action.newPostText
+            }
         }
         default:
             return state;
