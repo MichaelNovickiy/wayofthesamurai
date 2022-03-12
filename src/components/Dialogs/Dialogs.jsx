@@ -3,11 +3,12 @@ import c from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
 
-export const Dialogs = (props) => {
+const Dialogs = (props) => {
     let state = props.messagesPage
 
     let dialogElements = state.dialogData.map(d => <DialogItem name={d.name} id={d.id}/>)
     let messageElements = state.messageData.map(m => <Message message={m.message} id={m.id}/>)
+    let newMessageBody = state.newMessageText;
 
     let onMessageChange = (event) => {
         let messageBody = event.target.value;
@@ -25,8 +26,8 @@ export const Dialogs = (props) => {
             <div className={c.messages}>
                 {messageElements}
                 <textarea placeholder='Enter your message'
-                    value={state.newMessageText}
-                    onChange={onMessageChange}
+                          value={newMessageBody}
+                          onChange={onMessageChange}
                 />
                 <div>
                     <button onClick={sendMessage}>Send Message</button>
@@ -36,3 +37,4 @@ export const Dialogs = (props) => {
         </div>
     )
 }
+export default Dialogs;

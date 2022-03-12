@@ -2,7 +2,7 @@ import React from "react";
 import c from './MyPosts.module.css'
 import {PostWithTS} from "./Post/PostWithTS";
 
-export const MyPosts = (props) => {
+const MyPosts = (props) => {
 
     let postElement = props.posts.map(p => <PostWithTS id={p.id} message={p.message} like={p.likecount}/>)
 
@@ -36,3 +36,4 @@ export const MyPosts = (props) => {
         </div>
     )
 }
+export default MyPosts;

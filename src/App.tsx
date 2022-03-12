@@ -3,10 +3,8 @@ import './App.css';
 import {Header} from "./components/Header/Header";
 import {Navbar} from "./components/Navbar/Navbar";
 import {Profile} from "./components/Profile/Profile";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Route} from "react-router-dom";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
-
-
 
 let App = (props: any) => {
     return (
@@ -15,13 +13,10 @@ let App = (props: any) => {
                 <Header/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
-                    <Routes>
-                        <Route path={'/Profile'}
-                               element={<Profile/>}/>
-                        <Route path={'/Dialogs/'}
-                               element={<DialogsContainer/>}/>
-                        {/*новый синтаксис роутев*/}
-                    </Routes>
+                    <Route path='/dialogs'
+                           render={ () => <DialogsContainer /> }/>
+                    <Route path='/profile'
+                           render={ () => <Profile /> }/>
                 </div>
             </div>
         </BrowserRouter>
