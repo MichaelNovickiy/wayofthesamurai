@@ -10,6 +10,11 @@ export const Navbar = () => {
                     Profile
                 </NavLink>
             </div>
+            <div className={c.item}>
+                <NavLink to="/users" className={navData => navData.isActive ? c.active : c.item}>
+                    Users
+                </NavLink>
+            </div>
             <div className={`${c.item} ${c.active}`}>
                 <NavLink to="/dialogs" className={navData => navData.isActive ? c.active : c.item}>
                     Messages

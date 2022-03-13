@@ -2,13 +2,14 @@ const FOLLOW_BUTTON = 'FOLLOW_BUTTON'
 const UNFOLLOW_BUTTON = 'UNFOLLOW_BUTTON'
 const SET_USERS = 'SET_USERS'
 
+
 export type usersType = {
-    id: string,
-    photoUrl: string,
+    name: string,
+    id: number,
+    uniqueUrlName: null,
+    photos: {small: any, large: any},
+    status: null,
     followed: boolean,
-    fullName: string,
-    status: string,
-    location: { city: string, country: string }
 }
 type InitialStateType = {
     users: Array<usersType>
@@ -43,7 +44,7 @@ export const usersReducer = (state: InitialStateType = initialState, action: any
             }
         }
         case SET_USERS: {
-            return {...state, users: [...state.users, ...action.users]}
+            return { ...state, users: [ ...state.users, ...action.users ]}
         }
         default:
             return state;
