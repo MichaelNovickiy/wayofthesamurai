@@ -12,12 +12,18 @@ export type usersType = {
     followed: boolean,
 }
 type InitialStateType = {
-    users: Array<usersType>
+    users: Array<usersType>,
+    pageSize: number,
+    totalUsersCount: number,
+    currentPage: number
 }
 // export type InitialStateType = typeof initialState
 
 let initialState: InitialStateType = {
-    users: []
+    users: [],
+    pageSize: 5,
+    totalUsersCount: 20,
+    currentPage: 1
     // as Array <usersType>,
 }
 
