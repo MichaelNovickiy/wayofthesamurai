@@ -1,45 +1,27 @@
-import React from "react";
 import styles from "./users.module.css";
-import * as axios from "axios";
+import React from "react";
 
+let UsersFunctional = (props) => {
 
-class Users extends React.Component {
-    componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
-            .then(response => {
-                this.props.setUsers(response.data.items);
-                this.props.setTotalUsersCount(response.data.totalCount);
-            })
-    };
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
 
-    onClickPageChangedHandler = (pageNumber) => {
-        this.props.setCurrentPage(pageNumber)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
-            .then(response => {
-                this.props.setUsers(response.data.items);
-            })
+    let pages = [];
+
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i);
+        if (i == 20) break;
     }
 
-    render() {
-        let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
-
-        let pages = [];
-
-        for (let i = 1; i <= pagesCount; i++) {
-            pages.push(i);
-            if (i == 20) break;
-        }
-
-        return <div>
-            <div>
-                {pages.map(p => {
-                    return <span className={this.props.currentPage === p && styles.selectedPage}
-                                 onClick={(e) => {
-                                     this.onClickPageChangedHandler(p)
-                                 }}>{p}</span>
-                })}
-            </div>
-            {this.props.users.map(m => <div key={m.id}>
+    return <div>
+        <div>
+            {pages.map(p => {
+                return <span className={props.currentPage === p && styles.selectedPage}
+                             onClick={(e) => {
+                                 props.onClickPageChangedHandler(p)
+                             }}>{p}</span>
+            })}
+        </div>
+        {props.users.map(m => <div key={m.id}>
             <span>
                 <div>
                     <img
@@ -48,14 +30,14 @@ class Users extends React.Component {
                 </div>
                 <div>
                     {m.followed ? <button onClick={() => {
-                            this.props.unFollow(m.id)
+                            props.unFollow(m.id)
                         }}>Unfollow</button> :
                         <button onClick={() => {
-                            this.props.follow(m.id)
+                            props.follow(m.id)
                         }}>Follow</button>}
                 </div>
             </span>
-                <span>
+            <span>
                 <span>
                     <div>{m.name}</div>
                     <div>{m.status}</div>
@@ -65,9 +47,7 @@ class Users extends React.Component {
                     <div>{"m.location.city"}</div>
                 </span>
             </span>
-            </div>)}
-        </div>
-    }
+        </div>)}
+    </div>
 }
-
-export default Users;
+export default UsersFunctional
