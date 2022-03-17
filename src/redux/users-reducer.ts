@@ -3,6 +3,7 @@ const UNFOLLOW_BUTTON = 'UNFOLLOW_BUTTON'
 const SET_USERS = 'SET_USERS'
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 
 
 export type usersType = {
@@ -17,7 +18,8 @@ type InitialStateType = {
     users: Array<usersType>,
     pageSize: number,
     totalUsersCount: number,
-    currentPage: number
+    currentPage: number,
+    isFetching: boolean,
 }
 // export type InitialStateType = typeof initialState
 
@@ -25,7 +27,8 @@ let initialState: InitialStateType = {
     users: [],
     pageSize: 5,
     totalUsersCount: 0,
-    currentPage: 1
+    currentPage: 1,
+    isFetching: true,
     // as Array <usersType>,
 }
 
@@ -60,13 +63,17 @@ export const usersReducer = (state: InitialStateType = initialState, action: any
         case SET_TOTAL_USERS_COUNT: {
             return {...state, totalUsersCount: action.count}
         }
+        case TOGGLE_IS_FETCHING: {
+            return {...state, isFetching: action.isFetching}
+        }
         default:
             return state;
     }
 }
 
-export const followAC = (userId: string) => ({type: FOLLOW_BUTTON, userId})
+export const followAC = (userId: string) => ({type: FOLLOW_BUTTON, userId: userId})
 export const unFollowAC = (userId: string) => ({type: UNFOLLOW_BUTTON, userId})
 export const setUsersAC = (users: usersType) => ({type: SET_USERS, users})
 export const setCurrentPageAC = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage})
 export const setTotalUsersCountAC = (totalUsers: number) => ({type: SET_TOTAL_USERS_COUNT, count: totalUsers})
+export const toggleIsFetchingAC = (isFetching: boolean) => ({type: TOGGLE_IS_FETCHING, isFetching})

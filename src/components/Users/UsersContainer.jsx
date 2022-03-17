@@ -1,13 +1,23 @@
 import React from "react";
 import {connect} from "react-redux";
-import {followAC, setCurrentPageAC, setTotalUsersCountAC, setUsersAC, unFollowAC} from "../../redux/users-reducer";
+import {
+    followAC,
+    setCurrentPageAC,
+    setTotalUsersCountAC,
+    setUsersAC,
+    toggleIsFetchingAC,
+    unFollowAC
+} from "../../redux/users-reducer";
 import * as axios from "axios";
 import UsersFunctional from "./UsersFunctional";
+import Preloader from "../Common/Preloader/Preloader";
 
 class UsersContainer extends React.Component {
     componentDidMount() {
+        this.props.toggleIsFetching(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
             .then(response => {
+                this.props.toggleIsFetching(false)
                 this.props.setUsers(response.data.items);
                 this.props.setTotalUsersCount(response.data.totalCount);
             })
@@ -15,21 +25,26 @@ class UsersContainer extends React.Component {
 
     onClickPageChangedHandler = (pageNumber) => {
         this.props.setCurrentPage(pageNumber)
+        this.props.toggleIsFetching(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
             .then(response => {
+                this.props.toggleIsFetching(false)
                 this.props.setUsers(response.data.items);
             })
     }
 
     render() {
-        return <UsersFunctional totalUsersCount={this.props.totalUsersCount}
-                                pageSize={this.props.pageSize}
-                                currentPage={this.currentPage}
-                                users={this.props.users}
-                                follow={this.props.follow}
-                                unFollow={this.props.unFollow}
-                                onClickPageChangedHandler={this.onClickPageChangedHandler}
-        />
+        return <>
+            {this.props.isFetching ? <Preloader /> : null}
+            <UsersFunctional totalUsersCount={this.props.totalUsersCount}
+                             pageSize={this.props.pageSize}
+                             currentPage={this.currentPage}
+                             users={this.props.users}
+                             follow={this.props.follow}
+                             unFollow={this.props.unFollow}
+                             onClickPageChangedHandler={this.onClickPageChangedHandler}
+            />
+        </>
     }
 }
 
@@ -38,19 +53,20 @@ let mapStateToProps = (state) => {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage
+        currentPage: state.usersPage.currentPage,
+        isFetching: state.usersPage.isFetching,
     }
 };
 
 let mapDispatchToProps = (dispatch) => {
     return {
-        follow: (userId) =>{
+        follow: (userId) => {
             dispatch(followAC(userId))
         },
-        unFollow: (userId) =>{
+        unFollow: (userId) => {
             dispatch(unFollowAC(userId))
         },
-        setUsers: (users) =>{
+        setUsers: (users) => {
             dispatch(setUsersAC(users))
         },
         setCurrentPage: (pageNumber) => {
@@ -58,6 +74,9 @@ let mapDispatchToProps = (dispatch) => {
         },
         setTotalUsersCount: (totalUsers) => {
             dispatch(setTotalUsersCountAC(totalUsers))
+        },
+        toggleIsFetching: (isFetching) => {
+            dispatch(toggleIsFetchingAC(isFetching))
         },
     }
 }
