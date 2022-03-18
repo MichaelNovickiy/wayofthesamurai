@@ -19,7 +19,7 @@ let UsersFunctional = (props) => {
                 return <span className={props.currentPage === p && styles.selectedPage}
                              onClick={(e) => {
                                  props.onClickPageChangedHandler(p)
-                             }}>{p}</span>
+                             }}>{p+" "}</span>
             })}
         </div>
         {props.users.map(m => <div key={m.id}>
