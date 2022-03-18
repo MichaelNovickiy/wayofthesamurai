@@ -13,8 +13,9 @@ export const ProfileInfo = (props) => {
                 <img
                     src="https://static3.depositphotos.com/1000454/256/i/600/depositphotos_2567474-stock-photo-wide-panorama-of-french-alps.jpg"/>
             </div>
+            <img src={props.profile.photos.large}/>
             <div className={c.discription}>
-                <ing src={props.profile.photos.large}/>
+
                 ava + description
             </div>
         </div>
