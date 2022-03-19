@@ -2,8 +2,9 @@ import styles from "./users.module.css";
 import React from "react";
 import {NavLink} from "react-router-dom";
 import * as axios from "axios";
+import {toggleIsFollowingProgress} from "../../redux/users-reducer";
 
-let UsersFunctional = (props) => {
+let Users = (props) => {
 
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
 
@@ -33,11 +34,12 @@ let UsersFunctional = (props) => {
                   </NavLink>
                 </div>
                 <div>
-                    {m.followed ? <button onClick={() => {
+                    {m.followed ? <button disabled={props.followingInProgress.some(id => id === m.id)} onClick={() => {
+                            props.toggleIsFollowingProgress(true, m.id)
                             axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${m.id}`, {
                                 withCredentials: true,
                                 headers: {
-                                    "API-KEY" : "e72442e7-e84c-4575-88b8-fbca240ffc79"
+                                    "API-KEY": "e72442e7-e84c-4575-88b8-fbca240ffc79"
                                 }
 
                             })
@@ -45,19 +47,22 @@ let UsersFunctional = (props) => {
                                     if (response.data.resultCode === 0) {
                                         props.unFollow(m.id)
                                     }
+                                    props.toggleIsFollowingProgress(false, m.id)
                                 })
                         }}>Unfollow</button> :
-                        <button onClick={() => {
+                        <button disabled={props.followingInProgress.some(id => id === m.id)} onClick={() => {
+                            props.toggleIsFollowingProgress(true, m.id)
                             axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${m.id}`, {}, {
                                 withCredentials: true,
                                 headers: {
-                                    "API-KEY" : "e72442e7-e84c-4575-88b8-fbca240ffc79"
+                                    "API-KEY": "e72442e7-e84c-4575-88b8-fbca240ffc79"
                                 }
                             })
                                 .then(response => {
                                     if (response.data.resultCode === 0) {
                                         props.follow(m.id)
                                     }
+                                    props.toggleIsFollowingProgress(false, m.id)
                                 })
                         }}>Follow</button>}
                 </div>
@@ -75,4 +80,4 @@ let UsersFunctional = (props) => {
         </div>)}
     </div>
 }
-export default UsersFunctional
+export default Users
