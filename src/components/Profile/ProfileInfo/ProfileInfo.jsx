@@ -1,10 +1,11 @@
 import React from "react";
 import c from './ProfileInfo.module.css'
 import Preloader from "../../Common/Preloader/Preloader";
+import {ProfileStatus} from "./ProfileStatus";
 
 export const ProfileInfo = (props) => {
     if (!props.profile) {
-        return <Preloader />
+        return <Preloader/>
     }
     return (
         <div>
@@ -15,8 +16,7 @@ export const ProfileInfo = (props) => {
             </div>
             <img src={props.profile.photos.large}/>
             <div className={c.discription}>
-
-                ava + description
+                <ProfileStatus status="Status"/>
             </div>
         </div>
     )
