@@ -1,9 +1,10 @@
-import {usersAPI} from "../api/api";
+import {profileAPI, usersAPI} from "../api/api";
 import {toggleIsFollowingProgress, unFollowSuccess} from "./users-reducer";
 
 const ADD_POST = 'ADD_POST'
 const UPDATE_NEW_POST_DATA = 'UPDATE_NEW_POST_DATA'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
+const SET_STATUS = 'SET_STATUS'
 
 let initialState = {
     postData: [
@@ -12,7 +13,8 @@ let initialState = {
         {id: '3', message: 'I am a cat', likecount: '7'},
     ],
     newPostText: '',
-    profile: null
+    profile: null,
+    status: '',
 }
 
 export const profileReducer = (state: any = initialState, action: any) => {
@@ -41,6 +43,12 @@ export const profileReducer = (state: any = initialState, action: any) => {
                 profile: action.profile
             }
         }
+        case SET_STATUS: {
+            return {
+                ...state,
+                status: action.status
+            }
+        }
         default:
             return state;
     }
@@ -49,11 +57,28 @@ export const profileReducer = (state: any = initialState, action: any) => {
 export const addPostAC = () => ({type: ADD_POST})
 export const updateNewPostTextAC = (text: string) => ({type: UPDATE_NEW_POST_DATA, newText: text})
 const setUserProfile = (profile: any) => ({type: SET_USER_PROFILE, profile})
+const setStatus = (status: string) => ({type: SET_STATUS, status})
+
+
 export const getUserProfile = (userId: any) => (dispatch: any) => {
-    return usersAPI.getProfile(userId)
+    profileAPI.getProfile(userId)
         .then((response: any) => {
             dispatch(setUserProfile(response.data));
         })
+}
+
+export const getStatus = (userId: any) => (dispatch: any) => {
+    profileAPI.getStatus(userId)
+        .then((response: any) => {
+            dispatch(setStatus(response.data));
+        })
+}
+export const updateStatus = (status: string) => (dispatch: any) => {
+    profileAPI.updateStatus(status)
+        .then((response: any) => {
+            if (response.data.resultCode === 0) {
+                dispatch(setStatus(status));
+            }})
 }
 
 export const getProfileThunk = (userId: any) => {
