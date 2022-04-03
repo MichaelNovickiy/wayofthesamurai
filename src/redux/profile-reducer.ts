@@ -2,7 +2,6 @@ import {profileAPI, usersAPI} from "../api/api";
 import {toggleIsFollowingProgress, unFollowSuccess} from "./users-reducer";
 
 const ADD_POST = 'ADD_POST'
-const UPDATE_NEW_POST_DATA = 'UPDATE_NEW_POST_DATA'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_STATUS = 'SET_STATUS'
 
@@ -12,7 +11,6 @@ let initialState = {
         {id: '2', message: 'It is my first post', likecount: '4'},
         {id: '3', message: 'I am a cat', likecount: '7'},
     ],
-    newPostText: '',
     profile: null,
     status: '',
 }
@@ -22,21 +20,16 @@ export const profileReducer = (state: any = initialState, action: any) => {
         case ADD_POST: {
             let newPost = {
                 id: 5,
-                message: state.newPostText,
+                message: action.values,
                 likecount: 0,
             };
             return {
                 ...state,
-                postData: [...state.postData, newPost],
+                postData: [newPost, ...state.postData],
                 newPostText: ''
             }
         }
-        case UPDATE_NEW_POST_DATA: {
-            return {
-                ...state,
-                newPostText: action.newPostText
-            }
-        }
+
         case SET_USER_PROFILE: {
             return {
                 ...state,
@@ -54,8 +47,7 @@ export const profileReducer = (state: any = initialState, action: any) => {
     }
 }
 
-export const addPostAC = () => ({type: ADD_POST})
-export const updateNewPostTextAC = (text: string) => ({type: UPDATE_NEW_POST_DATA, newText: text})
+export const addPostAC = (values: any) => ({type: ADD_POST, values})
 const setUserProfile = (profile: any) => ({type: SET_USER_PROFILE, profile})
 const setStatus = (status: string) => ({type: SET_STATUS, status})
 
