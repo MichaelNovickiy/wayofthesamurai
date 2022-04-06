@@ -55,6 +55,5 @@ export default (compose(
         setCurrentPage,
         toggleIsFollowingProgress,
         getUsers,
-    }),
-    withAuthRedirect
+    })
 )(UsersContainer));
