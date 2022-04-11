@@ -6,7 +6,9 @@ import {maxLengthCreator, required} from "../../../utuls/validators/validators";
 import {Textarea} from "../../Common/FormsControl/FormsControls";
 
 const MyPosts = React.memo(props => {
-    let postElement = props.posts.map(p => <PostWithTS id={p.id} message={p.message} like={p.likecount}/>)
+    let postElement = [...props.posts]
+        .reverse()
+        .map(p => <PostWithTS id={p.id} message={p.message} like={p.likecount}/>)
 
     let addNewPost = (values) => {
         props.addPost(values.newPostBody)
