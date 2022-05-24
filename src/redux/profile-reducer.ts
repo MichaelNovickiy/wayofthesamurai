@@ -52,36 +52,29 @@ const setUserProfile = (profile: any) => ({type: SET_USER_PROFILE, profile})
 const setStatus = (status: string) => ({type: SET_STATUS, status})
 
 
-export const getUserProfile = (userId: any) => (dispatch: any) => {
-    profileAPI.getProfile(userId)
-        .then((response: any) => {
-            dispatch(setUserProfile(response.data));
-        })
+export const getUserProfile = (userId: any) => async (dispatch: any) => {
+    const response = await profileAPI.getProfile(userId)
+    dispatch(setUserProfile(response.data));
 }
 
-export const getStatus = (userId: any) => (dispatch: any) => {
-    profileAPI.getStatus(userId)
-        .then((response: any) => {
-            dispatch(setStatus(response.data));
-        })
+export const getStatus = (userId: any) => async (dispatch: any) => {
+    const response = await profileAPI.getStatus(userId)
+    dispatch(setStatus(response.data));
 }
-export const updateStatus = (status: string) => (dispatch: any) => {
-    profileAPI.updateStatus(status)
-        .then((response: any) => {
-            if (response.data.resultCode === 0) {
-                dispatch(setStatus(status));
-            }})
+export const updateStatus = (status: string) => async (dispatch: any) => {
+    const response = await profileAPI.updateStatus(status)
+    if (response.data.resultCode === 0) {
+        dispatch(setStatus(status));
+    }
 }
 
 export const getProfileThunk = (userId: any) => {
-    return (dispatch: any) => {
+    return async (dispatch: any) => {
         dispatch(toggleIsFollowingProgress(true, userId))
-        usersAPI.unFollow(userId)
-            .then((response: any) => {
-                if (response.data.resultCode === 0) {
-                    dispatch(unFollowSuccess(userId))
-                }
-                dispatch(toggleIsFollowingProgress(false, userId))
-            })
+        const response = await usersAPI.unFollow(userId)
+        if (response.data.resultCode === 0) {
+            dispatch(unFollowSuccess(userId))
+        }
+        dispatch(toggleIsFollowingProgress(false, userId))
     }
 }
