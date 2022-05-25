@@ -1,4 +1,5 @@
 import {usersAPI, usersAPI as getAPI} from "../api/api";
+import {updateObjectInArray} from "../utuls/object-helpers";
 
 const FOLLOW_BUTTON = 'FOLLOW_BUTTON'
 const UNFOLLOW_BUTTON = 'UNFOLLOW_BUTTON'
@@ -41,22 +42,14 @@ export const usersReducer = (state: InitialStateType = initialState, action: any
     switch (action.type) {
         case FOLLOW_BUTTON: {
             return {
-                ...state, users: state.users.map(m => {
-                    if (m.id === action.userId) {
-                        return {...m, followed: true}
-                    }
-                    return m;
-                })
+                ...state,
+                users: updateObjectInArray(state.users, action.userId, 'id', {followed: true})
             }
         }
         case UNFOLLOW_BUTTON: {
             return {
-                ...state, users: state.users.map(m => {
-                    if (m.id === action.userId) {
-                        return {...m, followed: false}
-                    }
-                    return m;
-                })
+                ...state,
+                users: updateObjectInArray(state.users, action.userId, 'id', {followed: false})
             }
         }
         case SET_USERS: {
@@ -72,7 +65,6 @@ export const usersReducer = (state: InitialStateType = initialState, action: any
             return {...state, isFetching: action.isFetching}
         }
         case TOGGLE_IS_FOLLOWING_PROGRESS: {
-            debugger
             return {
                 ...state, followingInProgress: action.isFetching ?
                     [...state.followingInProgress, action.userId] :
