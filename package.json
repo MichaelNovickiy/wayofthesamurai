@@ -2,10 +2,12 @@
   "name": "wayofthesamyrai",
   "version": "0.1.0",
   "private": true,
+  "homepage":"https://MichaelNovickiy.github.io/wayofthesamurai",
   "dependencies": {
     "@types/react": "^17.0.40",
     "axios": "^0.26.1",
     "classnames": "^2.3.1",
+    "gh-pages": "^4.0.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-redux": "^6.0.1",
@@ -21,7 +23,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
