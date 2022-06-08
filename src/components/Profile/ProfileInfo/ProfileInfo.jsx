@@ -24,6 +24,7 @@ export const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, 
 
     const onSubmit = (formData) => {
         saveProfile(formData)
+        setEditMode(false)
     }
 
     return (
@@ -39,9 +40,13 @@ export const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, 
                 </div>
                 <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
 
-                {editMode ? <ProfileBlockInfoEditReduxForm profile={profile}
-                                                           onSubmit={onSubmit}
-                    /> :
+                {editMode
+                    ?
+                    <ProfileBlockInfoEditReduxForm profile={profile}
+                                                   onSubmit={onSubmit}
+                                                   initialValues={profile}
+                    />
+                    :
                     <ProfileBlockInfo profile={profile}
                                       isOwner={isOwner}
                                       goToEditMode={goToEditMode}

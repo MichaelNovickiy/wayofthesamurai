@@ -6,7 +6,6 @@ import {
     getUserProfile,
     savePhoto,
     saveProfile,
-    setUserProfile,
     updateStatus
 } from "../../redux/profile-reducer";
 import {withRouter} from "react-router-dom";
