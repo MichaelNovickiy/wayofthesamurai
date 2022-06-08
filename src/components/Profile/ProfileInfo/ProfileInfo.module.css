@@ -3,6 +3,11 @@
     height: 150px;
 }
 
-.discription {
+.description {
     padding: 10px;
+}
+.contact{
+    padding-left: 10px;
+    font-size: large;
+    font-family: "Arial Narrow";
 }
