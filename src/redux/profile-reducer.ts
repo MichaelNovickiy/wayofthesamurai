@@ -51,14 +51,6 @@ export const profileReducer = (state: any = initialState, action: any) => {
                 profile: {...state.profile, photos: action.photos}
             }
         }
-        case SAVE_PROFILE_SUCCESS: {
-            return {
-                ...state,
-                // profile: {...state.profile, photos: action.photos}
-            }
-        }
-
-
         default:
             return state;
     }
@@ -68,8 +60,6 @@ export const addPostAC = (values: any) => ({type: ADD_POST, values})
 const setUserProfile = (profile: any) => ({type: SET_USER_PROFILE, profile})
 const setStatus = (status: string) => ({type: SET_STATUS, status})
 const savePhotoSuccess = (photos: any) => ({type: SAVE_PHOTO_SUCCESS, photos})
-const saveProfileSuccess = (profile: any) => ({type: SAVE_PROFILE_SUCCESS, profile})
-
 
 export const getUserProfile = (userId: any) => async (dispatch: any) => {
     const response = await profileAPI.getProfile(userId)
@@ -100,7 +90,8 @@ export const saveProfile = (profile: any) => async (dispatch: any, getState: any
     if (response.data.resultCode === 0) {
         dispatch(getUserProfile(userId));
     } else {
-        dispatch(stopSubmit('edit-profile', {_error: response.data.messages[0]}))
+        dispatch(stopSubmit("edit-profile", {_error: response.data.messages[0]}))
+        return Promise.reject(response.data.messages[0])
     }
 }
 
