@@ -3,7 +3,7 @@ import c from './ProfileInfo.module.css'
 import Preloader from "../../Common/Preloader/Preloader";
 import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
 import {userPhoto} from "../../Users/User";
-import ProfileBlockInfoEditReduxForm, {ProfileBlockInfoEdit} from "./ProfileBlockInfoEdit";
+import ProfileBlockInfoEditReduxForm from "./ProfileBlockInfoEdit";
 
 export const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, saveProfile}, ...props) => {
 
@@ -85,5 +85,6 @@ const ProfileBlockInfo = ({profile, isOwner, goToEditMode}) => {
 }
 
 export const Contact = ({contactTitle, contactValue}) => {
-    return <div className={c.contact}>{contactTitle}:{contactValue}</div>
+    return <div className={c.contact}>{contactTitle}:
+        <a href={contactValue} target="_blank">{contactValue}</a></div>
 }

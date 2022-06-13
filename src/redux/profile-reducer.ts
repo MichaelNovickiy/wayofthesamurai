@@ -6,7 +6,7 @@ const ADD_POST = 'ADD_POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_STATUS = 'SET_STATUS'
 const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS'
-const SAVE_PROFILE_SUCCESS = 'SAVE_PROFILE_SUCCESS'
+// const SAVE_PROFILE_SUCCESS = 'SAVE_PROFILE_SUCCESS'
 
 let initialState = {
     postData: [
@@ -71,10 +71,14 @@ export const getStatus = (userId: any) => async (dispatch: any) => {
     dispatch(setStatus(response.data));
 }
 export const updateStatus = (status: string) => async (dispatch: any) => {
-    const response = await profileAPI.updateStatus(status)
-    if (response.data.resultCode === 0) {
-        dispatch(setStatus(status));
-    }
+   try {
+       const response = await profileAPI.updateStatus(status)
+       if (response.data.resultCode === 0) {
+           dispatch(setStatus(status));
+       }
+   } catch (error) {
+       //some error we can add dispatch
+   }
 }
 export const savePhoto = (file: any) => async (dispatch: any) => {
     // @ts-ignore
