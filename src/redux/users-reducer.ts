@@ -1,6 +1,7 @@
 import {usersAPI, usersAPI as getAPI} from "../api/api";
+import { photosType } from "../types/types";
 import {updateObjectInArray} from "../utuls/object-helpers";
-
+//types
 const FOLLOW_BUTTON = 'FOLLOW_BUTTON'
 const UNFOLLOW_BUTTON = 'UNFOLLOW_BUTTON'
 const SET_USERS = 'SET_USERS'
@@ -9,36 +10,47 @@ const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'
 
+type followSuccessType = {
+    type: typeof FOLLOW_BUTTON, userId: number
+}
+type unFollowSuccessType = {
+    type: typeof UNFOLLOW_BUTTON, userId: number
+}
+type setUsersType = {
+    type: typeof SET_USERS, users: usersType
+}
+type setCurrentPageType = {
+    type: typeof SET_CURRENT_PAGE, currentPage: number
+}
+type setTotalUsersCountType = {
+    type: typeof SET_TOTAL_USERS_COUNT, count: number
+}
+type toggleIsFetchingType = {
+    type: typeof TOGGLE_IS_FETCHING, isFetching: boolean
+}
+type toggleIsFollowingProgressType = {
+    type: typeof TOGGLE_IS_FOLLOWING_PROGRESS, isFetching: boolean, userId: number
+}
 
 export type usersType = {
     name: string,
     id: number,
     uniqueUrlName: null,
-    photos: { small: any, large: any },
+    photos: photosType,
     status: null,
     followed: boolean,
 }
-type InitialStateType = {
-    users: Array<usersType>,
-    pageSize: number,
-    totalUsersCount: number,
-    currentPage: number,
-    isFetching: boolean,
-    followingInProgress: Array<number>,
-}
-// export type InitialStateType = typeof initialState
-
-let initialState: InitialStateType = {
-    users: [],
+let initialState = {
+    users: [] as Array<usersType>,
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,
-    followingInProgress: []
-    // as Array <usersType>,
+    followingInProgress: [] as Array<number>
 }
-
-export const usersReducer = (state: InitialStateType = initialState, action: any) => {
+export type userStateType = typeof initialState
+//reducer
+export const usersReducer = (state: userStateType = initialState, action: any) => {
     switch (action.type) {
         case FOLLOW_BUTTON: {
             return {
@@ -76,18 +88,23 @@ export const usersReducer = (state: InitialStateType = initialState, action: any
     }
 }
 
-export const followSuccess = (userId: string) => ({type: FOLLOW_BUTTON, userId: userId})
-export const unFollowSuccess = (userId: string) => ({type: UNFOLLOW_BUTTON, userId})
-export const setUsers = (users: usersType) => ({type: SET_USERS, users})
-export const setCurrentPage = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage})
-export const setTotalUsersCount = (totalUsers: number) => ({type: SET_TOTAL_USERS_COUNT, count: totalUsers})
-export const toggleIsFetching = (isFetching: boolean) => ({type: TOGGLE_IS_FETCHING, isFetching})
-export const toggleIsFollowingProgress = (isFetching: boolean, userId: number) => ({
+
+//action creators
+export const followSuccess = (userId: number): followSuccessType => ({type: FOLLOW_BUTTON, userId})
+export const unFollowSuccess = (userId: number): unFollowSuccessType => ({type: UNFOLLOW_BUTTON, userId})
+export const setUsers = (users: usersType): setUsersType => ({type: SET_USERS, users})
+export const setCurrentPage = (currentPage: number): setCurrentPageType => ({type: SET_CURRENT_PAGE, currentPage})
+export const setTotalUsersCount = (totalUsers: number): setTotalUsersCountType => ({
+    type: SET_TOTAL_USERS_COUNT,
+    count: totalUsers
+})
+export const toggleIsFetching = (isFetching: boolean): toggleIsFetchingType => ({type: TOGGLE_IS_FETCHING, isFetching})
+export const toggleIsFollowingProgress = (isFetching: boolean, userId: number): toggleIsFollowingProgressType => ({
     type: TOGGLE_IS_FOLLOWING_PROGRESS,
     isFetching,
     userId
 })
-
+//thanks
 export const requestUsers = (page: any, pageSize: any) => {
     return async (dispatch: any) => {
         dispatch(toggleIsFetching(true))

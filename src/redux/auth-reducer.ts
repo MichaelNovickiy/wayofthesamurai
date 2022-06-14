@@ -4,13 +4,8 @@ import {stopSubmit} from "redux-form";
 const SET_USER_DATA = 'AUTH_SET_USER_DATA'
 const GET_CAPTCHA_URL_SUCCESS = 'GET_CAPTCHA_URL_SUCCESS'
 
-type stateType = {
-    id: number | null,
-    email: string | null,
-    login: string | null,
-    isAuth: boolean,
-    captchaUrl: string | null,
-}
+type stateType = typeof initialState;
+
 type setAuthUserDataPayloadType = {
     id: number | null, email: string | null, login: string | null, isAuth: boolean
 }
@@ -23,12 +18,12 @@ type getCaptchaUrlSuccessType = {
 }
 
 //initial state
-let initialState: stateType = {
-    id: null,
-    email: null,
-    login: null,
+let initialState = {
+    id: null as number | null,
+    email: null as string | null,
+    login: null as string | null,
     isAuth: false,
-    captchaUrl: null,
+    captchaUrl: null as string | null,
 }
 
 export const authReducer = (state: stateType = initialState, action: any): stateType => {
