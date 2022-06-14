@@ -2,9 +2,12 @@
   "name": "wayofthesamyrai",
   "version": "0.1.0",
   "private": true,
-  "homepage":"https://MichaelNovickiy.github.io/wayofthesamurai",
+  "homepage": "https://MichaelNovickiy.github.io/wayofthesamurai",
   "dependencies": {
-    "@types/react": "^17.0.40",
+    "@types/jest": "^28.1.1",
+    "@types/node": "^17.0.42",
+    "@types/react": "^18.0.12",
+    "@types/react-dom": "^18.0.5",
     "axios": "^0.26.1",
     "classnames": "^2.3.1",
     "gh-pages": "^4.0.0",
@@ -17,7 +20,7 @@
     "redux-form": "^8.3.8",
     "redux-thunk": "^2.4.1",
     "reselect": "^4.1.5",
-    "typescript": "^4.6.2"
+    "typescript": "^4.7.3"
   },
   "scripts": {
     "start": "react-scripts start",

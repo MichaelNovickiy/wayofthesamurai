@@ -14,7 +14,7 @@ import {initializeApp} from "./redux/app-reducer";
 
 class App extends React.Component {
     catchAllUnhandledErrors = (promiseRejectionEvent) => {
-        alert(promiseRejectionEvent)
+        console.log(promiseRejectionEvent)
     }
 
     componentDidMount() {
