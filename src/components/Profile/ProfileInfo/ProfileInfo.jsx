@@ -3,7 +3,7 @@ import c from './ProfileInfo.module.css'
 import Preloader from "../../Common/Preloader/Preloader";
 import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
 import {userPhoto} from "../../Users/User";
-import ProfileBlockInfoEditReduxForm from "./ProfileBlockInfoEdit";
+import ProfileBlockInfoEditReduxForm, {ProfileBlockInfoEdit} from "./ProfileBlockInfoEdit";
 
 export const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, saveProfile}, ...props) => {
 

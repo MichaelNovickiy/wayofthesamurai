@@ -1,5 +1,5 @@
 import {usersAPI, usersAPI as getAPI} from "../api/api";
-import { photosType } from "../types/types";
+import {usersType} from "../types/types";
 import {updateObjectInArray} from "../utuls/object-helpers";
 //types
 const FOLLOW_BUTTON = 'FOLLOW_BUTTON'
@@ -30,15 +30,6 @@ type toggleIsFetchingType = {
 }
 type toggleIsFollowingProgressType = {
     type: typeof TOGGLE_IS_FOLLOWING_PROGRESS, isFetching: boolean, userId: number
-}
-
-export type usersType = {
-    name: string,
-    id: number,
-    uniqueUrlName: null,
-    photos: photosType,
-    status: null,
-    followed: boolean,
 }
 let initialState = {
     users: [] as Array<usersType>,
