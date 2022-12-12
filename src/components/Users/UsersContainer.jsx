@@ -50,9 +50,4 @@ let mapStateToProps = (state) => {
 };
 
 export default (compose(
-    connect(mapStateToProps,  {
-        follow,
-        unFollow,
-        getUsers: requestUsers,
-    }),
-)(UsersContainer));
+    connect(mapStateToProps,  {follow, unFollow, getUsers: requestUsers,}),)(UsersContainer));

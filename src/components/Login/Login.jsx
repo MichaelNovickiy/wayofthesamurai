@@ -51,4 +51,4 @@ const mapStateToProps = (state) => ({
     captchaUrl: state.auth.captchaUrl
 })
 
-export default connect(mapStateToProps, {login, logout})(Login);
+export default connect(mapStateToProps, {login})(Login);

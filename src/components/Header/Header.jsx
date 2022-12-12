@@ -1,17 +1,32 @@
-import React from "react";
-import c from './Header.module.css'
-import {NavLink} from "react-router-dom";
+import React from 'react';
+import style from './Header.module.css'
+import {Link} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {logout} from '../../redux/auth-reducer';
 
-export const Header = (props) => {
+import {Layout, Menu} from 'antd';
+
+const {Header} = Layout;
+
+
+export const HeaderMy = () => {
+    const {isAuth, login, id} = useSelector(state => state.auth)
+    const dispatch = useDispatch()
+
+    const logoutHandler = () => {
+        dispatch(logout)
+    }
+
     return (
-        <header className={c.header}>
-            <img src="https://pngimg.com/uploads/tesla_logo/tesla_logo_PNG16.png"/>
-            <div className={c.loginBlock}>
-                {props.isAuth ?
-                    <div>Логин: {props.login} - <button onClick={props.logout}>Log out</button><div>ID: {props.id}</div></div>:
-                    <NavLink to={'/login'}>Login
-                    </NavLink>}
+        <Header className="header">
+            {/*<div className="logo"/>*/}
+            <div style={{color: 'white'}}>
+                {isAuth ?
+                    <div>Логин: {login} - <button onClick={logoutHandler}>Log out</button>
+                        <div>ID: {id}</div>
+                    </div> :
+                    <Link to={'/login'}>Login</Link>}
             </div>
-        </header>
+        </Header>
     )
 }

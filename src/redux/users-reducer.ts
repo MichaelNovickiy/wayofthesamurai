@@ -128,12 +128,12 @@ const followUnfollowFlow = async (dispatch: any, userId: any, apiMethod: any, ac
 
 export const follow = (userId: any) => {
     return async (dispatch: any) => {
-        followUnfollowFlow(dispatch, userId, usersAPI.follow.bind(usersAPI), followSuccess)
+        await followUnfollowFlow(dispatch, userId, usersAPI.follow.bind(usersAPI), followSuccess)
     }
 }
 export const unFollow = (userId: any) => {
     return async (dispatch: any) => {
-        followUnfollowFlow(dispatch, userId, usersAPI.unFollow.bind(usersAPI), unFollowSuccess)
+        await followUnfollowFlow(dispatch, userId, usersAPI.unFollow.bind(usersAPI), unFollowSuccess)
     }
 }
 
