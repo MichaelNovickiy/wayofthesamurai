@@ -1,9 +1,10 @@
-import React from "react";
-import preloader from "../../../assets/images/Circle-Loading.svg"
+import React from 'react';
+import { Space, Spin } from 'antd';
 
-let Preloader = (props) => {
-    return <div>
-        <img src={preloader}/>
-    </div>
-}
-export default Preloader
+const Preloader = () => (
+    <Space size="large" style={{display: 'flex', justifyContent: "center", alignItems: "center ", width: "100%"}}>
+        <Spin size="large" />
+    </Space>
+);
+
+export default Preloader;

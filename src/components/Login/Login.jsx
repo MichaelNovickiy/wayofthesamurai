@@ -1,54 +1,114 @@
 import React from 'react';
-import {reduxForm} from 'redux-form';
-import {createField, Input} from '../Common/FormsControl/FormsControls';
-import {required} from '../../utuls/validators/validators';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {login} from '../../redux/auth-reducer';
-import { Navigate } from "react-router-dom";
-import style from '../Common/FormsControl/FormsControls.module.css';
+import {Navigate} from 'react-router-dom';
+import {Button, Checkbox, Form, Input} from 'antd';
 
-const LoginForm = ({handleSubmit, error, captchaUrl}) => {
-    return (
-        <form onSubmit={handleSubmit}>
-            {createField("Email", [required], "email", Input)}
-            {createField("Password", [required], "password", Input, {type: "password"})}
-            {createField(null, null, "rememberMe", Input, {type: "checkbox"}, "Remember me")}
+const Login = () => {
+    const isAuth = useSelector((state) => state.auth.isAuth)
+    const captchaUrl = useSelector((state) => state.auth.captchaUrl)
+    const errorMessage = useSelector((state) => state.auth.error)
 
-            {captchaUrl && <img src={captchaUrl}/>}
-            {captchaUrl && createField('Antibot symbols', [required], "captcha", Input, {})}
+    const dispatch = useDispatch()
 
-            {error && <div className={style.formSummaryError}>
-                {error}
-            </div>}
-            <div>
-                <button>Login</button>
-            </div>
-        </form>
-    )
-}
-
-const LoginReduxForm = reduxForm({
-    form: 'login'
-})(LoginForm)
-
-const Login = ({login, isAuth, captchaUrl}) => {
     const onSubmit = (formData) => {
-        login(formData.email, formData.password, formData.rememberMe, formData.captcha)
+        dispatch(login(formData.username, formData.password, formData.remember, formData.captcha))
     }
 
     if (isAuth) {
-        return <Navigate to={"/profile"}/>
+        return <Navigate to={'/profile'}/>
     }
 
-    return <div>
+    return <>
         <h1>Login</h1>
-        <LoginReduxForm onSubmit={onSubmit} captchaUrl={captchaUrl}/>
-    </div>
+        <Form
+            name="basic"
+            labelCol={{
+                span: 8,
+            }}
+            wrapperCol={{
+                span: 16,
+            }}
+            initialValues={{
+                remember: true,
+            }}
+            onFinish={onSubmit}
+            autoComplete="off"
+        >
+            <Form.Item
+                label="Username"
+                name="username"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input your username!',
+                    },
+                ]}
+            >
+                <Input/>
+            </Form.Item>
+
+            <Form.Item
+                label="Password"
+                name="password"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input your password!',
+                    },
+                ]}
+            >
+                <Input.Password/>
+            </Form.Item>
+
+            <Form.Item
+                name="remember"
+                valuePropName="checked"
+                wrapperCol={{
+                    offset: 8,
+                    span: 16,
+                }}
+            >
+                <Checkbox>Remember me</Checkbox>
+            </Form.Item>
+            {captchaUrl && <div>
+                <p style={{textAlign: 'center'}}><img src={captchaUrl} alt="captcha"/></p>
+                <Form.Item
+                    label="Captcha"
+                    name="captcha"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Antibot symbols',
+                        },
+                    ]}
+                >
+                    <Input/>
+                </Form.Item>
+            </div>}
+
+            {errorMessage &&
+                <div style={{
+                    border: '#f32020 2px solid',
+                    padding: '5px',
+                    color: '#fc8d8d',
+                    borderRadius: '7px',
+                    margin: '10px 0'
+                }}><p style={{textAlign: 'center', margin: '0'}}>{errorMessage}</p></div>
+            }
+
+            <Form.Item
+                wrapperCol={{
+                    offset: 8,
+                    span: 16,
+                }}
+            >
+                <Button type="primary" htmlType="submit">
+                    Submit
+                </Button>
+            </Form.Item>
+        </Form>
+    </>
 }
 
-const mapStateToProps = (state) => ({
-    isAuth: state.auth.isAuth,
-    captchaUrl: state.auth.captchaUrl
-})
-
-export default connect(mapStateToProps, {login})(Login);
+export default Login;

@@ -12,7 +12,6 @@ import {HeaderMy} from './components/Header/Header'
 
 import {Layout, Menu, theme} from 'antd';
 import {CalendarOutlined, MailOutlined,} from '@ant-design/icons';
-import {withRouter} from './utuls/withRouter';
 
 const {Content, Footer, Sider} = Layout;
 
@@ -75,4 +74,4 @@ const App = () => {
     )
 }
 
-export default withRouter(App);
+export default App;

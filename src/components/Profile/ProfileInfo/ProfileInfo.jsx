@@ -6,6 +6,7 @@ import {userPhoto} from '../../Users/User';
 import ProfileBlockInfoEditReduxForm from './ProfileBlockInfoEdit';
 import {savePhoto, saveProfile, updateStatus} from '../../../redux/profile-reducer';
 import {useDispatch} from 'react-redux';
+import {Divider} from 'antd';
 
 export const ProfileInfo = ({profile, status, isOwner}) => {
     const dispatch = useDispatch()
@@ -52,7 +53,9 @@ export const ProfileInfo = ({profile, status, isOwner}) => {
             <img src={profile.photos.large || userPhoto}/>
             <div className={c.description}>
                 <div>
-                    {isOwner && <input type={'file'} onChange={onChangePhotoSelected}/>}
+                    {isOwner &&
+                        <input type={'file'} onChange={onChangePhotoSelected}
+                        />}
                 </div>
                 <ProfileStatusWithHooks status={status} updateStatus={updateStatusHandler}/>
 
@@ -75,7 +78,9 @@ export const ProfileInfo = ({profile, status, isOwner}) => {
 
 const ProfileBlockInfo = ({profile, isOwner, goToEditMode}) => {
     return <div>
-        {isOwner && <button onClick={goToEditMode}>Edit profile</button>}
+        {isOwner &&
+            <button onClick={goToEditMode}>Edit profile</button>
+        }
         <div>
             <b>Full name:</b> {profile.fullName}
         </div>
@@ -90,7 +95,8 @@ const ProfileBlockInfo = ({profile, isOwner, goToEditMode}) => {
             <b>About me:</b> {profile.aboutMe}
         </div>
         <div>
-            <b>Contacts:</b> {Object.keys(profile.contacts).map(key => {
+            <Divider orientation="left">Contacts:</Divider>
+            {Object.keys(profile.contacts).map(key => {
             return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
         })}
         </div>

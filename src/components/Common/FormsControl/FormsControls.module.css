@@ -7,8 +7,3 @@
 .error span{
     color: #fc3a3a;
 }
-.formSummaryError {
-    border: #f32020 2px solid;
-    padding: 5px;
-    color: #fc8d8d;
-}
