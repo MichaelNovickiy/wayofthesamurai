@@ -1,51 +1,39 @@
-import React from "react";
-import {Profile} from "./Profile";
-import {connect} from "react-redux";
-import {
-    getStatus,
-    getUserProfile,
-    savePhoto,
-    saveProfile,
-    updateStatus
-} from "../../redux/profile-reducer";
-import {withRouter} from "react-router-dom";
-import {compose} from "redux";
+import React, {useEffect} from 'react';
+import {Profile} from './Profile';
+import {useDispatch, useSelector} from 'react-redux';
+import {getStatus, getUserProfile} from '../../redux/profile-reducer';
+import {withRouter} from '../../utuls/withRouter';
 
-class ProfileContainer extends React.Component {
-    componentDidMount() {
-        let userId = this.props.match.params.userId
-        if (!userId) {
-            userId = this.props.authorizedUserId;
+const ProfileContainer = (props) => {
+    const dispatch = useDispatch()
+    const profile = useSelector(state => state.profilePage.profile)
+    const status = useSelector(state => state.profilePage.status)
+    const authorizedUserId = useSelector(state => state.auth.id)
+
+    useEffect(() => {
+        debugger
+        let userId;
+        if (props.router.params.userId !== undefined) {
+            userId = props.router.params.userId
+        } else {
+            userId = authorizedUserId;
             if (!userId) {
-                this.props.history.push("/login")
+                props.history.push('/login')
             }
         }
-        this.props.getUserProfile(userId);
-        this.props.getStatus(userId)
-    }
+        dispatch(getUserProfile(userId));
+        dispatch(getStatus(userId))
 
-    render() {
-        return (
-            <div>
-                <Profile {...this.props}
-                         profile={this.props.profile}
-                         isOwner={!this.props.match.params.userId}
-                         savePhoto={this.props.savePhoto}
-                         saveProfile={this.props.saveProfile}
-                />
-            </div>
-        )
-    }
+    }, [props.router.params.userId])
+
+    return (
+        <div>
+            <Profile {...props}
+                     profile={profile}
+                     isOwner={!props.router.params.userId}
+                     status={status}
+            />
+        </div>
+    )
 }
-
-let mapStateToProps = (state) => {
-    return {
-        profile: state.profilePage.profile,
-        status: state.profilePage.status,
-        isAuth: state.auth.isAuth,
-        authorizedUserId: state.auth.id,
-    }
-}
-
-export default compose(
-    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus, savePhoto, saveProfile}), withRouter,)(ProfileContainer);
+export default withRouter(ProfileContainer)

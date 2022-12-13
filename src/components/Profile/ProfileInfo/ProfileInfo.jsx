@@ -1,11 +1,24 @@
-import React, {useState} from "react";
+import React, {useState} from 'react';
 import c from './ProfileInfo.module.css'
-import Preloader from "../../Common/Preloader/Preloader";
-import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
-import {userPhoto} from "../../Users/User";
-import ProfileBlockInfoEditReduxForm from "./ProfileBlockInfoEdit";
+import Preloader from '../../Common/Preloader/Preloader';
+import {ProfileStatusWithHooks} from './ProfileStatusWithHooks';
+import {userPhoto} from '../../Users/User';
+import ProfileBlockInfoEditReduxForm from './ProfileBlockInfoEdit';
+import {savePhoto, saveProfile, updateStatus} from '../../../redux/profile-reducer';
+import {useDispatch} from 'react-redux';
 
-export const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, saveProfile}, ...props) => {
+export const ProfileInfo = ({profile, status, isOwner}) => {
+    const dispatch = useDispatch()
+
+    const savePhotoHandler = (file) => {
+        dispatch(savePhoto(file))
+    }
+    const saveProfileHandler = (formData) => {
+        dispatch(saveProfile(formData))
+    }
+    const updateStatusHandler = (status) => {
+        dispatch(updateStatus(status))
+    }
 
     const [editMode, setEditMode] = useState(false)
 
@@ -14,7 +27,7 @@ export const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, 
     }
     const onChangePhotoSelected = (e) => {
         if (e.target.files.length) {
-            savePhoto(e.target.files[0])
+            savePhotoHandler(e.target.files[0])
         }
     }
 
@@ -23,7 +36,7 @@ export const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, 
     }
 
     const onSubmit = (formData) => {
-        saveProfile(formData).then(
+        saveProfileHandler(formData).then(
             () => {
                 setEditMode(false)
             }
@@ -41,7 +54,7 @@ export const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, 
                 <div>
                     {isOwner && <input type={'file'} onChange={onChangePhotoSelected}/>}
                 </div>
-                <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
+                <ProfileStatusWithHooks status={status} updateStatus={updateStatusHandler}/>
 
                 {editMode
                     ?
@@ -70,9 +83,9 @@ const ProfileBlockInfo = ({profile, isOwner, goToEditMode}) => {
             <b>Looking for a job:</b> {profile.lookingForAJob ? 'yes' : 'no'}
         </div>
         {profile.lookingForAJob &&
-        <div>
-            <b>Description about a job:</b> {profile.lookingForAJobDescription}
-        </div>}
+            <div>
+                <b>Description about a job:</b> {profile.lookingForAJobDescription}
+            </div>}
         <div>
             <b>About me:</b> {profile.aboutMe}
         </div>

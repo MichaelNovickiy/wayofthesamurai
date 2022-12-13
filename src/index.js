@@ -3,13 +3,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import {HashRouter} from "react-router-dom";
+import {BrowserRouter, HashRouter} from 'react-router-dom';
 import {Provider} from "react-redux";
 
 ReactDOM.render(
-    <HashRouter >
+    <BrowserRouter >
         <Provider store={store}>
             <App/>
         </Provider>
-    </HashRouter>, document.getElementById('root')
+    </BrowserRouter>, document.getElementById('root')
 );

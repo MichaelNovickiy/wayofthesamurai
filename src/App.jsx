@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import {Link, Route, Switch, withRouter} from 'react-router-dom';
+import {Link, Route, Routes} from 'react-router-dom';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
@@ -12,6 +12,7 @@ import {HeaderMy} from './components/Header/Header'
 
 import {Layout, Menu, theme} from 'antd';
 import {CalendarOutlined, MailOutlined,} from '@ant-design/icons';
+import {withRouter} from './utuls/withRouter';
 
 const {Content, Footer, Sider} = Layout;
 
@@ -54,19 +55,15 @@ const App = () => {
                                 />
                             </Sider>
                             <Content style={{padding: '0 24px', minHeight: 280}}>
-                                <Switch>
-                                    <Route path="/dialogs"
-                                           render={() => <DialogsContainer/>}/>
-                                    <Route path="/profile/:userId?"
-                                           render={() => <ProfileContainer/>}/>
-                                    <Route path="/users"
-                                           render={() => <UsersContainer/>}/>
-                                    <Route path="/login"
-                                           render={() => <Login/>}/>
-                                    <Route path="*"
-                                           render={() => <h1 style={{display: 'flex', justifyContent: 'center'}}>
-                                               404 PAGE NOT FOUND</h1>}/>
-                                </Switch>
+                                <Routes>
+                                    <Route path="/dialogs" element={<DialogsContainer/>}/>
+                                    <Route exact path="/profile" element={<ProfileContainer/>}/>
+                                    <Route path="/profile/:userId" element={<ProfileContainer/>}/>
+                                    <Route path="/users" element={<UsersContainer/>}/>
+                                    <Route path="/login" element={<Login/>}/>
+                                    <Route path="*" element={<h1 style={{display: 'flex', justifyContent: 'center'}}>
+                                        404 PAGE NOT FOUND</h1>}/>
+                                </Routes>
                             </Content>
                         </Layout>
                     </Content>

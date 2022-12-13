@@ -1,11 +1,11 @@
 import React from 'react';
-import {reduxForm} from "redux-form";
-import {createField, Input} from "../Common/FormsControl/FormsControls";
-import {required} from "../../utuls/validators/validators";
-import {connect} from "react-redux";
-import {login, logout} from "../../redux/auth-reducer";
-import {Redirect} from "react-router-dom";
-import style from "../Common/FormsControl/FormsControls.module.css";
+import {reduxForm} from 'redux-form';
+import {createField, Input} from '../Common/FormsControl/FormsControls';
+import {required} from '../../utuls/validators/validators';
+import {connect} from 'react-redux';
+import {login} from '../../redux/auth-reducer';
+import { Navigate } from "react-router-dom";
+import style from '../Common/FormsControl/FormsControls.module.css';
 
 const LoginForm = ({handleSubmit, error, captchaUrl}) => {
     return (
@@ -37,7 +37,7 @@ const Login = ({login, isAuth, captchaUrl}) => {
     }
 
     if (isAuth) {
-        return <Redirect to={"/profile"}/>
+        return <Navigate to={"/profile"}/>
     }
 
     return <div>

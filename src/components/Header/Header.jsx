@@ -1,10 +1,9 @@
 import React from 'react';
-import style from './Header.module.css'
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {logout} from '../../redux/auth-reducer';
 
-import {Layout, Menu} from 'antd';
+import {Layout} from 'antd';
 
 const {Header} = Layout;
 
@@ -19,7 +18,6 @@ export const HeaderMy = () => {
 
     return (
         <Header className="header">
-            {/*<div className="logo"/>*/}
             <div style={{color: 'white'}}>
                 {isAuth ?
                     <div>Логин: {login} - <button onClick={logoutHandler}>Log out</button>
