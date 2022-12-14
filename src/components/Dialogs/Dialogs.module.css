@@ -1,24 +1,9 @@
 .dialogs {
     display: grid;
-    grid-template-columns: 2fr 10fr;
-}
-
-.dialogItems {
-
+    grid-template-columns: 4fr 8fr;
+    gap: 10%;
 }
 
 .active {
     color: chocolate;
-}
-
-.dialog {
-
-}
-
-.messages {
-
-}
-
-.message {
-
 }

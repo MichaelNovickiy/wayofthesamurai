@@ -13,23 +13,22 @@ type messageType = {
     id: number
     message: string
 }
-type sendMessageACType={
+type sendMessageACType = {
     type: typeof SEND_MESSAGE
     newMessageBody: string
 }
 //initial state
 let initialState = {
     dialogData: [
-        {id: 1, name: 'Mike'},
-        {id: 2, name: 'Nik'},
-        {id: 3, name: 'Lex'},
-        {id: 4, name: 'Pop'},
-        {id: 5, name: 'Dima'},
+        {id: 1, name: 'Alex'},
+        {id: 2, name: 'Artem'},
+        {id: 3, name: 'Daria'},
+        {id: 4, name: 'Dmitriy'},
     ] as Array<dialogType>,
     messageData: [
-        {id: 1, message: 'Hi'},
+        {id: 1, message: 'Hello World!'},
         {id: 2, message: 'How are you?'},
-        {id: 3, message: 'Yhoho'}
+        {id: 3, message: 'What do you do?'}
     ] as Array<messageType>,
     newMessageBody: '',
 }
@@ -40,7 +39,11 @@ export const dialogsReducer = (state: dialogStateType = initialState, action: ac
             let messageBody = action.newMessageBody;
             return <dialogStateType>{
                 ...state,
-                messageData: [...state.messageData, {id: 4, message: messageBody}]
+                messageData: [...state.messageData,
+                    {
+                        id: ((Math.random() * 100).toFixed(2)).toString(),
+                        message: messageBody
+                    }]
             };
         }
         default:
