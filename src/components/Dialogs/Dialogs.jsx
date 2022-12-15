@@ -1,14 +1,10 @@
 import React from 'react';
-import c from './Dialogs.module.css'
-import {DialogItem} from './DialogItem/DialogItem';
+import style from './Dialogs.module.css'
 import {FormToAdd} from '../Common/FormToAdd';
 import {Form} from 'antd';
 import ListItems from '../Common/ListItems';
 
 const Dialogs = (props) => {
-    let state = props.messagesPage
-    // console.log(state.dialogData)
-
     const [form] = Form.useForm();
 
     let addNewMessage = (values) => {
@@ -17,17 +13,16 @@ const Dialogs = (props) => {
     }
 
     return (
-        <div className={c.dialogs}>
-            <div className={c.dialogItems}>
+        <div className={style.dialogs}>
+            <div>
                 <h3>Friends</h3>
-                <ListItems posts={state.dialogData} avatar/>
+                <ListItems posts={props.messagesPage.dialogData} avatar/>
             </div>
-            <div className={c.messages}>
+            <div>
                 <h3>Messages</h3>
-                <ListItems posts={state.messageData}/>
+                <ListItems posts={props.messagesPage.messageData}/>
                 <FormToAdd onSubmit={addNewMessage} form={form} name="newMessageBody" buttonText="Add message"/>
             </div>
-
         </div>
     )
 }
