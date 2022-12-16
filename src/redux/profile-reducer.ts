@@ -1,6 +1,7 @@
-import {profileAPI} from "../api/api";
-import {stopSubmit} from "redux-form";
-import { photosType } from "../types/types";
+import {profileAPI} from '../api/api';
+import {stopSubmit} from 'redux-form';
+import { photosType } from './users-reducer';
+
 //types
 const ADD_POST = 'ADD_POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
@@ -41,6 +42,8 @@ type savePhotoSuccessType = {
     type: typeof SAVE_PHOTO_SUCCESS,
     photos: photosType
 }
+
+
 //initial state
 let initialState = {
     postData: [
@@ -51,12 +54,13 @@ let initialState = {
     profile: null as null | profileType,
     status: '',
 }
+
 //reducer
 export const profileReducer = (state: profileStateType = initialState, action: any): profileStateType => {
     switch (action.type) {
         case ADD_POST: {
             let newPost = {
-                id: ((Math.random()*100).toFixed(2)).toString(),
+                id: ((Math.random() * 100).toFixed(2)).toString(),
                 message: action.values,
                 likecount: 0,
             };
@@ -130,7 +134,7 @@ export const saveProfile = (profile: any) => async (dispatch: any, getState: any
     if (response.data.resultCode === 0) {
         dispatch(getUserProfile(userId));
     } else {
-        dispatch(stopSubmit("edit-profile", {_error: response.data.messages[0]}))
+        dispatch(stopSubmit('edit-profile', {_error: response.data.messages[0]}))
         return Promise.reject(response.data.messages[0])
     }
 }

@@ -22,8 +22,7 @@ let rootReducers = combineReducers({
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-let store = createStore(rootReducers
-, composeEnhancers(applyMiddleware(thunkMiddleware)));
+let store = createStore(rootReducers, composeEnhancers(applyMiddleware(thunkMiddleware)));
 
 // @ts-ignore
 window.___store___ = store

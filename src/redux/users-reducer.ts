@@ -1,6 +1,7 @@
-import {usersAPI, usersAPI as getAPI} from "../api/api";
-import { photosType } from "../types/types";
-import {updateObjectInArray} from "../utuls/object-helpers";
+import {usersAPI, usersAPI as getAPI} from '../api/api';
+import {updateObjectInArray} from '../utuls/object-helpers';
+import {appStateType} from './redux-store';
+
 //types
 const FOLLOW_BUTTON = 'FOLLOW_BUTTON'
 const UNFOLLOW_BUTTON = 'UNFOLLOW_BUTTON'
@@ -10,26 +11,17 @@ const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'
 
-type followSuccessType = {
-    type: typeof FOLLOW_BUTTON, userId: number
-}
-type unFollowSuccessType = {
-    type: typeof UNFOLLOW_BUTTON, userId: number
-}
-type setUsersType = {
-    type: typeof SET_USERS, users: usersType
-}
-type setCurrentPageType = {
-    type: typeof SET_CURRENT_PAGE, currentPage: number
-}
-type setTotalUsersCountType = {
-    type: typeof SET_TOTAL_USERS_COUNT, count: number
-}
-type toggleIsFetchingType = {
-    type: typeof TOGGLE_IS_FETCHING, isFetching: boolean
-}
-type toggleIsFollowingProgressType = {
-    type: typeof TOGGLE_IS_FOLLOWING_PROGRESS, isFetching: boolean, userId: number
+type followSuccessType = { type: typeof FOLLOW_BUTTON, userId: number }
+type unFollowSuccessType = { type: typeof UNFOLLOW_BUTTON, userId: number }
+type setUsersType = { type: typeof SET_USERS, users: usersType }
+type setCurrentPageType = { type: typeof SET_CURRENT_PAGE, currentPage: number }
+type setTotalUsersCountType = { type: typeof SET_TOTAL_USERS_COUNT, count: number }
+type toggleIsFetchingType = { type: typeof TOGGLE_IS_FETCHING, isFetching: boolean }
+type toggleIsFollowingProgressType = { type: typeof TOGGLE_IS_FOLLOWING_PROGRESS, isFetching: boolean, userId: number }
+
+export type photosType = {
+    small: null | string
+    large: null | string
 }
 
 export type usersType = {
@@ -40,15 +32,23 @@ export type usersType = {
     status: null,
     followed: boolean,
 }
+
+// selector
+export const geUsersSelector = (state: appStateType) => {
+    return state.usersPage
+}
+
+//initial state
 let initialState = {
     users: [] as Array<usersType>,
-    pageSize: 10,
+    pageSize: 16,
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,
     followingInProgress: [] as Array<number>
 }
 export type userStateType = typeof initialState
+
 //reducer
 export const usersReducer = (state: userStateType = initialState, action: any) => {
     switch (action.type) {
@@ -88,7 +88,6 @@ export const usersReducer = (state: userStateType = initialState, action: any) =
     }
 }
 
-
 //action creators
 export const followSuccess = (userId: number): followSuccessType => ({type: FOLLOW_BUTTON, userId})
 export const unFollowSuccess = (userId: number): unFollowSuccessType => ({type: UNFOLLOW_BUTTON, userId})
@@ -104,6 +103,7 @@ export const toggleIsFollowingProgress = (isFetching: boolean, userId: number): 
     isFetching,
     userId
 })
+
 //thanks
 export const requestUsers = (page: any, pageSize: any) => {
     return async (dispatch: any) => {

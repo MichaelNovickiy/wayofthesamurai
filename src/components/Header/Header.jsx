@@ -1,15 +1,13 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {logout} from '../../redux/auth-reducer';
-
+import {geAuthSelector, logout} from '../../redux/auth-reducer';
 import {Button, Layout} from 'antd';
 
-const {Header} = Layout;
-
-export const HeaderMy = () => {
-    const {isAuth, login} = useSelector(state => state.auth)
+export const HeaderContainer = () => {
+    const {isAuth, login} = useSelector((state) => geAuthSelector(state))
     const dispatch = useDispatch()
+    const {Header} = Layout;
 
     const logoutHandler = () => {
         dispatch(logout())

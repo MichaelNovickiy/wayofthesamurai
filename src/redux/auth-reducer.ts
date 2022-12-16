@@ -1,21 +1,21 @@
 import {authAPI, securityAPI} from '../api/api';
-import {stopSubmit} from 'redux-form';
+import {appStateType} from './redux-store';
+
 //types
 const SET_USER_DATA = 'AUTH_SET_USER_DATA'
 const GET_CAPTCHA_URL_SUCCESS = 'GET_CAPTCHA_URL_SUCCESS'
 const SET_ERROR = 'SET_ERROR'
-
 type stateType = typeof initialState;
-
-type setAuthUserDataPayloadType = {
-    id: number | null, email: string | null, login: string | null, isAuth: boolean
-}
+type setAuthUserDataPayloadType = { id: number | null, email: string | null, login: string | null, isAuth: boolean }
 type setAuthUserDataType = {
     type: typeof SET_USER_DATA,
     payload: setAuthUserDataPayloadType
 }
-type getCaptchaUrlSuccessType = {
-    type: typeof GET_CAPTCHA_URL_SUCCESS, payload: { captchaUrl: string }
+type getCaptchaUrlSuccessType = { type: typeof GET_CAPTCHA_URL_SUCCESS, payload: { captchaUrl: string } }
+
+// selector
+export const geAuthSelector = (state: appStateType) => {
+    return state.auth
 }
 
 //initial state
@@ -28,6 +28,7 @@ let initialState = {
     error: ''
 }
 
+//reducer
 export const authReducer = (state: stateType = initialState, action: any): stateType => {
     switch (action.type) {
         case SET_USER_DATA:
@@ -42,15 +43,17 @@ export const authReducer = (state: stateType = initialState, action: any): state
             return state;
     }
 }
+
 //action creators
 export const setAuthUserData = (id: number | null, email: string | null, login: string | null, isAuth: boolean): setAuthUserDataType => (
     {type: SET_USER_DATA, payload: {id, email, login, isAuth}})
 
-export const getCaptchaUrlSuccess = (captchaUrl: string): getCaptchaUrlSuccessType => (
-    {type: GET_CAPTCHA_URL_SUCCESS, payload: {captchaUrl}})
+export const getCaptchaUrlSuccess = (captchaUrl: string): getCaptchaUrlSuccessType => ({
+    type: GET_CAPTCHA_URL_SUCCESS,
+    payload: {captchaUrl}
+})
 
-export const setError = (errorMessage: string): any => (
-    {type: SET_ERROR, payload: errorMessage})
+export const setError = (errorMessage: string): any => ({type: SET_ERROR, payload: errorMessage})
 
 //thanks
 export const getAuthUserData = () => async (dispatch: any) => {

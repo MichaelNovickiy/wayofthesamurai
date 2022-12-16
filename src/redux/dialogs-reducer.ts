@@ -17,6 +17,7 @@ type sendMessageACType = {
     type: typeof SEND_MESSAGE
     newMessageBody: string
 }
+
 //initial state
 let initialState = {
     dialogData: [
@@ -32,6 +33,7 @@ let initialState = {
     ] as Array<messageType>,
     newMessageBody: '',
 }
+
 //reducer
 export const dialogsReducer = (state: dialogStateType = initialState, action: actionType): dialogStateType => {
     switch (action.type) {
@@ -50,5 +52,6 @@ export const dialogsReducer = (state: dialogStateType = initialState, action: ac
             return state;
     }
 }
+
 //action creator
 export const sendMessageAC = (newMessageBody: string): sendMessageACType => ({type: SEND_MESSAGE, newMessageBody})

@@ -8,8 +8,7 @@ import Login from './components/Login/Login';
 import Preloader from './components/Common/Preloader/Preloader';
 import {initializeApp} from './redux/app-reducer';
 import {useDispatch, useSelector} from 'react-redux';
-import {HeaderMy} from './components/Header/Header'
-
+import {HeaderContainer} from './components/Header/Header'
 import {Layout, Menu, theme} from 'antd';
 import {CalendarOutlined, MailOutlined,} from '@ant-design/icons';
 
@@ -41,7 +40,7 @@ const App = () => {
             {initialized
                 ?
                 <Layout>
-                    <HeaderMy/>
+                    <HeaderContainer/>
                     <Content style={{padding: '0 50px'}}>
                         <Layout style={{padding: '24px 0', background: colorBgContainer}}>
                             <Sider style={{background: colorBgContainer}} width={200}>

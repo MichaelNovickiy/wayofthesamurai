@@ -11,6 +11,8 @@ let User = ({user, followingInProgress, unFollow, follow, ...props}) => {
         hoverable
         style={{
             width: 240,
+            justifySelf: "center",
+            margin: "20px 0"
         }}
         cover={<Link to={'/profile/' + user.id}>
             <img style={{width: '100%'}}
