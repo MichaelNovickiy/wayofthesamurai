@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import style from './ProfileInfo.module.css'
 import Preloader from '../../Common/Preloader/Preloader';
 import {ProfileStatus} from './ProfileStatus';
 import {userPhoto} from '../../Users/User';
@@ -23,22 +22,16 @@ export const ProfileInfo = ({profile, status, isOwner}) => {
 
     const goToEditMode = () => setEditMode(true)
 
-    const onSubmit = (formData) => {
-        dispatch(saveProfile(formData)).then(
-            () => {
-                setEditMode(false)
-            }
-        )
-    }
+    const onSubmit = (formData) => dispatch(saveProfile(formData)).then(() => setEditMode(false))
 
     return (
         <div>
-            <div className={style.imageBack}>
+            <div style={{width: '100%', height: '150px'}}>
                 <img
                     src="https://static3.depositphotos.com/1000454/256/i/600/depositphotos_2567474-stock-photo-wide-panorama-of-french-alps.jpg"/>
             </div>
             <img src={profile.photos.large || userPhoto}/>
-            <div className={style.description}>
+            <div>
                 <div>
                     {isOwner && <input type={'file'} onChange={onChangePhotoSelected}/>}
                 </div>
@@ -48,7 +41,7 @@ export const ProfileInfo = ({profile, status, isOwner}) => {
                     ?
                     <ProfileBlockInfoEditReduxForm profile={profile}
                                                    onSubmit={onSubmit}
-                                                   initialValues={profile}
+                                                   goToEditMode={goToEditMode}
                     />
                     :
                     <ProfileBlockInfo profile={profile}
@@ -92,7 +85,7 @@ const ProfileBlockInfo = ({profile, isOwner, goToEditMode}) => {
 
 export const Contact = ({contactTitle, contactValue}) => {
     return <>
-        {contactValue && <div className={style.contact}>{contactTitle}:
+        {contactValue && <div>{contactTitle}:
             <a href={contactValue} target="_blank"> {contactValue} </a></div>}
     </>
 

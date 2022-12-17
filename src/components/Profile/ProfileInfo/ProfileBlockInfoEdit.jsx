@@ -1,44 +1,65 @@
-import React from "react";
-import {createField, Input, Textarea} from "../../Common/FormsControl/FormsControls";
-import {reduxForm} from "redux-form";
-import style from "../../Common/FormsControl/FormsControls.module.css";
+import React, {useState} from 'react';
+import {Button, Checkbox, Divider, Form, Input} from 'antd';
+import TextArea from 'antd/es/input/TextArea';
 
+const ProfileBlockInfoEdit = ({onSubmit, profile}) => {
+    const [form] = Form.useForm();
+    const [lookingForAJob, setLookingForAJob] = useState(profile.lookingForAJob)
 
-const ProfileBlockInfoEdit = ({handleSubmit, profile, error}) => {
-    console.log(error)
-    return <form onSubmit={handleSubmit}>
-        {<button>Save</button>}
-        {error && <div className={style.formSummaryError}>
-            {error}
-        </div>}
-        <div>
-            <b>Full name:</b> {createField("Full name", [], "fullName", Input)}
-        </div>
-        <div>
-            <b>Looking for a job:</b>
-            {createField("", [], "lookingForAJob", Input, {type: 'checkbox'})}
-        </div>
-        <div>
-            <b>Description about a job:</b>
-            {createField("Description about a job", [], "lookingForAJobDescription", Textarea)}
-        </div>
+    let addChanges = (values) => {
+        const contacts = {
+            facebook: values.facebook || null,
+            github: values.github || null,
+            instagram: values.instagram || null,
+            mainLink: values.mainLink || null,
+            twitter: values.twitter || null,
+            vk: values.vk || null,
+            website: values.website || null,
+            youtube: values.youtube || null,
+        }
+        onSubmit({
+            fullName: values.fullName || null,
+            lookingForAJob: lookingForAJob,
+            lookingForAJobDescription: values.lookingForAJobDescription || null,
+            aboutMe: values.aboutMe || null,
+            contacts: contacts
+        })
+    }
 
-        <div>
-            <b>About me:</b>
-            {createField("About me", [], "aboutMe", Textarea)}
-        </div>
-        <div>
-            <b>Contacts:</b> {Object.keys(profile.contacts).map(key => {
-            return <div key={key}>
-                {key}: {createField("", [], "contacts." + key, Input)}
-            </div>
-        })}
-        </div>
-    </form>
+    return (
+        <Form name="changeProfile"
+              form={form}
+              onFinish={addChanges}
+              labelCol={{span: 4}}
+              wrapperCol={{span: 8}}
+              initialValues={profile}
+        >
+            {<Button type="primary" htmlType="submit">Save</Button>}
+            <Form.Item name="fullName" label="Full name:">
+                <Input placeholder="Full name"/>
+            </Form.Item>
+
+            <Form.Item name="lookingForAJob" label="Looking for a job:">
+                <Checkbox checked={lookingForAJob}
+                          onChange={() => setLookingForAJob(!lookingForAJob)}/>
+            </Form.Item>
+
+            <Form.Item name="lookingForAJobDescription" label="Description about a job:">
+                <TextArea allowClear
+                          placeholder="Description about a job"/>
+            </Form.Item>
+            <Form.Item name="aboutMe" label="About me:">
+                <TextArea allowClear
+                          placeholder="About me"/>
+            </Form.Item>
+            <Divider orientation="left">Contacts:</Divider>
+            {Object.keys(profile.contacts).map(key => {
+                return <Form.Item name={key} label={key + ':'} key={key}>
+                    <Input/>
+                </Form.Item>
+            })}
+        </Form>
+    )
 }
 
-const ProfileBlockInfoEditReduxForm = reduxForm({
-    form: 'edit-profile'
-})(ProfileBlockInfoEdit)
-
-export default ProfileBlockInfoEditReduxForm
+export default ProfileBlockInfoEdit

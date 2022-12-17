@@ -7,13 +7,9 @@ export const ProfileStatus = ({statusText, isOwner}) => {
     let [statusLocal, setStatusLocal] = useState(statusText)
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        setStatusLocal(statusText)
-    }, [statusText])
+    useEffect(() => setStatusLocal(statusText), [statusText])
 
-    const activateEditMode = () => {
-        isOwner && setEditMode(true)
-    }
+    const activateEditMode = () => isOwner && setEditMode(true)
 
     const deactivateEditMode = () => {
         isOwner &&
@@ -21,10 +17,7 @@ export const ProfileStatus = ({statusText, isOwner}) => {
         dispatch(updateStatus(statusLocal));
     }
 
-    const onStatusChange = (e) => {
-        setStatusLocal(e.currentTarget.value);
-    }
-
+    const onStatusChange = (e) => setStatusLocal(e.currentTarget.value)
 
     return (
         <div>

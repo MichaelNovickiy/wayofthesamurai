@@ -1,6 +1,7 @@
 import {profileAPI} from '../api/api';
 import {stopSubmit} from 'redux-form';
 import { photosType } from './users-reducer';
+import {appStateType} from './redux-store';
 
 //types
 const ADD_POST = 'ADD_POST'
@@ -43,6 +44,10 @@ type savePhotoSuccessType = {
     photos: photosType
 }
 
+// selector
+export const geProfileSelector = (state: appStateType) => {
+    return state.profilePage
+}
 
 //initial state
 let initialState = {
@@ -127,10 +132,10 @@ export const savePhoto = (file: any) => async (dispatch: any) => {
         dispatch(savePhotoSuccess(response.data.data.photos));
     }
 }
-export const saveProfile = (profile: any) => async (dispatch: any, getState: any) => {
+export const saveProfile = (profileData: any) => async (dispatch: any, getState: any) => {
     const userId = getState().auth.id;
     // @ts-ignore
-    const response = await profileAPI.saveProfile(profile);
+    const response = await profileAPI.saveProfile(profileData);
     if (response.data.resultCode === 0) {
         dispatch(getUserProfile(userId));
     } else {

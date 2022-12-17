@@ -1,14 +1,15 @@
 import React, {useEffect} from 'react';
 import {Profile} from './Profile';
 import {useDispatch, useSelector} from 'react-redux';
-import {getStatus, getUserProfile} from '../../redux/profile-reducer';
+import {geProfileSelector, getStatus, getUserProfile} from '../../redux/profile-reducer';
 import {useNavigate, useParams} from 'react-router-dom';
+import {geAuthSelector} from '../../redux/auth-reducer';
 
-const ProfileContainer = (props) => {
+const ProfileContainer = () => {
+    const {profile, status} = useSelector(state => geProfileSelector(state))
+    const authorizedUserId = useSelector(state => geAuthSelector(state).id)
     const dispatch = useDispatch()
-    const profile = useSelector(state => state.profilePage.profile)
-    const status = useSelector(state => state.profilePage.status)
-    const authorizedUserId = useSelector(state => state.auth.id)
+
     let navigate = useNavigate();
     let params = useParams();
 
@@ -24,15 +25,13 @@ const ProfileContainer = (props) => {
         }
         dispatch(getUserProfile(userId));
         dispatch(getStatus(userId))
-
     }, [params.userId])
 
     return (
         <div>
-            <Profile {...props}
-                     profile={profile}
-                     isOwner={!params.userId}
+            <Profile profile={profile}
                      status={status}
+                     isOwner={!params.userId}
             />
         </div>
     )
