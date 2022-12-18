@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {updateStatus} from '../../../redux/profile-reducer';
 import {useDispatch} from 'react-redux';
+import {Input} from 'antd';
+import {EditOutlined} from '@ant-design/icons';
 
 export const ProfileStatus = ({statusText, isOwner}) => {
     let [editMode, setEditMode] = useState(false)
@@ -20,13 +22,14 @@ export const ProfileStatus = ({statusText, isOwner}) => {
     const onStatusChange = (e) => setStatusLocal(e.currentTarget.value)
 
     return (
-        <div>
-            {!editMode && <div style={{color: 'darkred', fontSize: '18px', fontWeight: '600'}}>
-                <b>Status: </b><span onDoubleClick={activateEditMode}>{statusText || 'No status'}</span>
+        <div style={{margin: '10px'}}>
+            {!editMode && <div style={{fontSize: '20px'}}>
+                <span onDoubleClick={activateEditMode}>{statusText || 'No status'}</span>
+                <EditOutlined style={{marginLeft: '10px'}}/>
             </div>}
 
             {editMode && <div>
-                <input onChange={onStatusChange} autoFocus onBlur={deactivateEditMode}
+                <Input onChange={onStatusChange} autoFocus onBlur={deactivateEditMode}
                        value={statusLocal}/>
             </div>}
         </div>

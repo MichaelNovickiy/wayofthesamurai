@@ -52,9 +52,9 @@ export const geProfileSelector = (state: appStateType) => {
 //initial state
 let initialState = {
     postData: [
-        {id: '1', message: 'Hi, how are you?', likecount: '2'},
-        {id: '2', message: 'It is my first post', likecount: '4'},
-        {id: '3', message: 'I am a cat', likecount: '7'},
+        {id: '1', message: 'How are you today?', likecount: '12'},
+        {id: '2', message: 'Hello World!', likecount: '124'},
+        {id: '3', message: 'It is my first post', likecount: '67'},
     ] as Array<postType>,
     profile: null as null | profileType,
     status: '',

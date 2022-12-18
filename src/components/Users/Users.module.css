@@ -1,0 +1,25 @@
+.users {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 0;
+    grid-row-gap: 0;
+}
+
+@media (max-width: 1330px) {
+    .users {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 1100px) {
+    .users {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 840px) {
+    .users {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+

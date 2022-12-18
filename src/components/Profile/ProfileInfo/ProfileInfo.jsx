@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import Preloader from '../../Common/Preloader/Preloader';
 import {ProfileStatus} from './ProfileStatus';
 import {userPhoto} from '../../Users/User';
-import ProfileBlockInfoEditReduxForm from './ProfileBlockInfoEdit';
+import ProfileBlockInfoEdit from './ProfileBlockInfoEdit';
 import {savePhoto, saveProfile} from '../../../redux/profile-reducer';
 import {useDispatch} from 'react-redux';
-import {Divider} from 'antd';
+import {Button, Descriptions, Divider, Image, Input} from 'antd';
 
 export const ProfileInfo = ({profile, status, isOwner}) => {
     const dispatch = useDispatch()
@@ -25,68 +25,80 @@ export const ProfileInfo = ({profile, status, isOwner}) => {
     const onSubmit = (formData) => dispatch(saveProfile(formData)).then(() => setEditMode(false))
 
     return (
-        <div>
-            <div style={{width: '100%', height: '150px'}}>
-                <img
-                    src="https://static3.depositphotos.com/1000454/256/i/600/depositphotos_2567474-stock-photo-wide-panorama-of-french-alps.jpg"/>
-            </div>
-            <img src={profile.photos.large || userPhoto}/>
-            <div>
-                <div>
-                    {isOwner && <input type={'file'} onChange={onChangePhotoSelected}/>}
-                </div>
+        <>
+            <div style={{
+                display: 'flex',
+                position: 'relative'
+            }}>
+                <Image
+                    width={250}
+                    src={profile.photos.large || userPhoto}
+                    style={{borderRadius: "10px"}}
+                />
+                {isOwner &&
+                    <>
+                        <label style={{
+                            border: '1px solid #ccc',
+                            display: 'inline-block',
+                            padding: '6px 6px',
+                            bottom: '0',
+                            background: 'white',
+                            left: '0',
+                            margin: '10px',
+                            cursor: 'pointer',
+                            borderRadius: '5px',
+                            position: 'absolute'
+                        }}>
+                            <input type="file" style={{display: 'none'}} onChange={onChangePhotoSelected}/>Upload image
+                        </label>
+                    </>
+                }
                 <ProfileStatus statusText={status} isOwner={isOwner}/>
-
-                {editMode
-                    ?
-                    <ProfileBlockInfoEditReduxForm profile={profile}
-                                                   onSubmit={onSubmit}
-                                                   goToEditMode={goToEditMode}
-                    />
-                    :
-                    <ProfileBlockInfo profile={profile}
-                                      isOwner={isOwner}
-                                      goToEditMode={goToEditMode}
-                    />}
-
             </div>
-        </div>
+            {editMode
+                ?
+                <ProfileBlockInfoEdit profile={profile}
+                                      onSubmit={onSubmit}
+                                      goToEditMode={goToEditMode}
+                />
+                :
+                <ProfileBlockInfo profile={profile}
+                                  isOwner={isOwner}
+                                  goToEditMode={goToEditMode}
+                />}
+        </>
     )
 }
 
 const ProfileBlockInfo = ({profile, isOwner, goToEditMode}) => {
     return <div>
         {isOwner &&
-            <button onClick={goToEditMode}>Edit profile</button>
+            <Button onClick={goToEditMode} style={{margin: "10px"}}>Edit profile</Button>
         }
-        {profile.fullName && <div>
-            <b>Full name:</b> {profile.fullName}
-        </div>}
+        <Divider orientation="left">User Info:</Divider>
 
-        <div>
-            <b>Looking for a job:</b> {profile.lookingForAJob ? 'yes' : 'no'}
-        </div>
-        {profile.lookingForAJob &&
-            <div>
-                <b>Description about a job:</b> {profile.lookingForAJobDescription}
-            </div>
-        }
-        {profile.aboutMe && <div>
-            <b>About me:</b> {profile.aboutMe}
-        </div>}
-        <div>
-            <Divider orientation="left">Contacts:</Divider>
+        <Descriptions bordered column={1} labelStyle={{width: '200px'}} size="small" style={{width: '500px'}}>
+            {profile.fullName && <Descriptions.Item label="Full name:">{profile.fullName}</Descriptions.Item>}
+            <Descriptions.Item label="Looking for a job:">{profile.lookingForAJob ? 'yes' : 'no'}</Descriptions.Item>
+            {profile.lookingForAJob && <Descriptions.Item
+                label="Description about a job:">{profile.lookingForAJobDescription}</Descriptions.Item>}
+            {profile.aboutMe && <Descriptions.Item label="About me:">{profile.aboutMe}</Descriptions.Item>}
+        </Descriptions>
+
+        <Divider orientation="left">Contacts:</Divider>
+        <ul>
             {Object.keys(profile.contacts).map(contact => {
                 return <Contact key={contact} contactTitle={contact} contactValue={profile.contacts[contact]}/>
             })}
-        </div>
+        </ul>
     </div>
 }
 
 export const Contact = ({contactTitle, contactValue}) => {
     return <>
-        {contactValue && <div>{contactTitle}:
-            <a href={contactValue} target="_blank"> {contactValue} </a></div>}
+        {contactValue &&
+            <li style={{fontSize: '18px', fontWeight: '300'}}>{contactTitle}:<a href={contactValue}> {contactValue} </a>
+            </li>}
     </>
 
 }

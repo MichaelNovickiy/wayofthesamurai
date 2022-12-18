@@ -15,10 +15,16 @@ export const HeaderContainer = () => {
 
     return (
         <Header className="header">
-            <div style={{color: 'white', display: 'flex', justifyContent: 'flex-end', alignItems: 'center'}}>
+            <div style={{
+                color: 'white',
+                display: 'flex',
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+                fontSize: '16px',
+            }}>
                 {isAuth
                     ?
-                    <div>{login} - <Button onClick={logoutHandler}>Log out</Button></div>
+                    <div>Hello, {login} - <Button onClick={logoutHandler}>Log out</Button></div>
                     :
                     <div><Button><Link to={'/login'}>Login</Link></Button></div>
                 }

@@ -10,7 +10,7 @@ import {initializeApp} from './redux/app-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {HeaderContainer} from './components/Header/Header'
 import {Layout, Menu, theme} from 'antd';
-import {CalendarOutlined, MailOutlined,} from '@ant-design/icons';
+import {UsergroupAddOutlined, MailOutlined, HomeOutlined} from '@ant-design/icons';
 
 const {Content, Footer, Sider} = Layout;
 
@@ -19,9 +19,9 @@ function getItem(label, key, icon, children) {
 }
 
 const items = [
-    getItem(<Link to="/profile">Profile</Link>, 'One', <MailOutlined/>),
-    getItem(<Link to="/users">Users</Link>, 'Two', <CalendarOutlined/>),
-    getItem(<Link to="/dialogs">Messages</Link>, 'Three', <CalendarOutlined/>),
+    getItem(<Link to="/profile">Profile</Link>, 'One', <HomeOutlined/>),
+    getItem(<Link to="/users">Users</Link>, 'Two', <UsergroupAddOutlined/>),
+    getItem(<Link to="/dialogs">Messages</Link>, 'Three', <MailOutlined/>),
 ];
 
 
@@ -43,11 +43,10 @@ const App = () => {
                     <HeaderContainer/>
                     <Content style={{padding: '0 50px'}}>
                         <Layout style={{padding: '24px 0', background: colorBgContainer}}>
-                            <Sider style={{background: colorBgContainer}} width={200}>
+                            <Sider style={{background: colorBgContainer}} width={160}>
                                 <Menu
                                     mode="inline"
-                                    defaultSelectedKeys={['1']}
-                                    defaultOpenKeys={['sub1']}
+                                    defaultSelectedKeys={['One']}
                                     style={{height: '100%'}}
                                     items={items}
                                 />

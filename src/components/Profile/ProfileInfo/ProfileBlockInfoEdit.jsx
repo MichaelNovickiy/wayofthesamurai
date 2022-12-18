@@ -3,7 +3,6 @@ import {Button, Checkbox, Divider, Form, Input} from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 
 const ProfileBlockInfoEdit = ({onSubmit, profile}) => {
-    const [form] = Form.useForm();
     const [lookingForAJob, setLookingForAJob] = useState(profile.lookingForAJob)
 
     let addChanges = (values) => {
@@ -28,22 +27,17 @@ const ProfileBlockInfoEdit = ({onSubmit, profile}) => {
 
     return (
         <Form name="changeProfile"
-              form={form}
               onFinish={addChanges}
               labelCol={{span: 4}}
               wrapperCol={{span: 8}}
-              initialValues={profile}
+              initialValues={{...profile, ...profile.contacts}}
         >
-            {<Button type="primary" htmlType="submit">Save</Button>}
-            <Form.Item name="fullName" label="Full name:">
-                <Input placeholder="Full name"/>
-            </Form.Item>
-
+            {<Button type="primary" htmlType="submit" style={{margin: "10px"}}>Save</Button>}
+            <Form.Item name="fullName" label="Full name:"><Input placeholder="Full name"/></Form.Item>
             <Form.Item name="lookingForAJob" label="Looking for a job:">
                 <Checkbox checked={lookingForAJob}
                           onChange={() => setLookingForAJob(!lookingForAJob)}/>
             </Form.Item>
-
             <Form.Item name="lookingForAJobDescription" label="Description about a job:">
                 <TextArea allowClear
                           placeholder="Description about a job"/>
@@ -52,6 +46,7 @@ const ProfileBlockInfoEdit = ({onSubmit, profile}) => {
                 <TextArea allowClear
                           placeholder="About me"/>
             </Form.Item>
+
             <Divider orientation="left">Contacts:</Divider>
             {Object.keys(profile.contacts).map(key => {
                 return <Form.Item name={key} label={key + ':'} key={key}>
