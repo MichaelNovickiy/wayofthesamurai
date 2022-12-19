@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {login} from '../../redux/auth-reducer';
 import {Navigate} from 'react-router-dom';
 import {Button, Checkbox, Form, Input} from 'antd';
+import style from './Login.module.css'
 
 const Login = () => {
     const isAuth = useSelector((state) => state.auth.isAuth)
@@ -20,14 +21,23 @@ const Login = () => {
     }
 
     return <>
-        <h1>Login</h1>
+        <h2 className={style.title}>Login</h2>
+        <div className={style.text}>Hello! You can register<a href="https://social-network.samuraijs.com/"
+                                                              target="_blank">here</a>
+            or use this data to log in:
+            <div className={style.dataText}>
+                <div>Email: <span>free@samuraijs.com</span></div>
+                <div>Password: <span>free</span></div>
+            </div>
+        </div>
+
         <Form
             name="basic"
             labelCol={{
                 span: 8,
             }}
             wrapperCol={{
-                span: 16,
+                span: 8,
             }}
             initialValues={{
                 remember: true,

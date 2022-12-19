@@ -4,8 +4,13 @@ import User from './User';
 import style from './Users.module.css'
 
 let Users = ({
-                 totalUsersCount, currentPage, onClickPageChangedHandler, users, followingInProgress,
-                 unFollow, follow
+                 totalUsersCount,
+                 currentPage,
+                 onClickPageChangedHandler,
+                 users,
+                 followingInProgress,
+                 unFollow,
+                 follow
              }) => {
 
     return <div>

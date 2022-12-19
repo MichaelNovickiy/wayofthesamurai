@@ -25,7 +25,8 @@ export const ProfileStatus = ({statusText, isOwner}) => {
         <div style={{margin: '10px'}}>
             {!editMode && <div style={{fontSize: '20px'}}>
                 <span onDoubleClick={activateEditMode}>{statusText || 'No status'}</span>
-                <EditOutlined style={{marginLeft: '10px'}}/>
+                {isOwner && <EditOutlined style={{marginLeft: '10px'}}
+                                          title="To edit, you need to double-click on the status"/>}
             </div>}
 
             {editMode && <div>

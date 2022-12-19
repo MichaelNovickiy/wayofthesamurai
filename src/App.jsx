@@ -64,7 +64,7 @@ const App = () => {
                             </Content>
                         </Layout>
                     </Content>
-                    <Footer style={{textAlign: 'center'}}>Social Network ©2022 Created by Mikhail Novickiy</Footer>
+                    <Footer style={{textAlign: 'center'}}>Social Network ©2022 Created by <a href="https://www.linkedin.com/in/michaelnovickiy/">Mikhail Novickiy</a></Footer>
                 </Layout>
                 :
                 <Preloader/>}

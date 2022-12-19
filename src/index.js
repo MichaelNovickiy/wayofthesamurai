@@ -7,7 +7,7 @@ import {HashRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 
 ReactDOM.render(
-    <HashRouter >
+    <HashRouter>
         <Provider store={store}>
             <App/>
         </Provider>

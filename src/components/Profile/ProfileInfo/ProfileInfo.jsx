@@ -4,11 +4,13 @@ import {ProfileStatus} from './ProfileStatus';
 import {userPhoto} from '../../Users/User';
 import ProfileBlockInfoEdit from './ProfileBlockInfoEdit';
 import {savePhoto, saveProfile} from '../../../redux/profile-reducer';
-import {useDispatch} from 'react-redux';
-import {Button, Descriptions, Divider, Image, Input} from 'antd';
+import {useDispatch, useSelector} from 'react-redux';
+import {Button, Descriptions, Divider, Image} from 'antd';
+import {geUsersSelector} from '../../../redux/users-reducer';
 
 export const ProfileInfo = ({profile, status, isOwner}) => {
     const dispatch = useDispatch()
+    const {isFetching} = useSelector(geUsersSelector)
     const [editMode, setEditMode] = useState(false)
 
     if (!profile) {
@@ -26,46 +28,52 @@ export const ProfileInfo = ({profile, status, isOwner}) => {
 
     return (
         <>
-            <div style={{
-                display: 'flex',
-                position: 'relative'
-            }}>
-                <Image
-                    width={250}
-                    src={profile.photos.large || userPhoto}
-                    style={{borderRadius: "10px"}}
-                />
-                {isOwner &&
-                    <>
-                        <label style={{
-                            border: '1px solid #ccc',
-                            display: 'inline-block',
-                            padding: '6px 6px',
-                            bottom: '0',
-                            background: 'white',
-                            left: '0',
-                            margin: '10px',
-                            cursor: 'pointer',
-                            borderRadius: '5px',
-                            position: 'absolute'
-                        }}>
-                            <input type="file" style={{display: 'none'}} onChange={onChangePhotoSelected}/>Upload image
-                        </label>
-                    </>
-                }
-                <ProfileStatus statusText={status} isOwner={isOwner}/>
-            </div>
-            {editMode
-                ?
-                <ProfileBlockInfoEdit profile={profile}
-                                      onSubmit={onSubmit}
-                                      goToEditMode={goToEditMode}
-                />
-                :
-                <ProfileBlockInfo profile={profile}
-                                  isOwner={isOwner}
-                                  goToEditMode={goToEditMode}
-                />}
+            {isFetching ? <Preloader/> :
+                <>
+                    <div style={{
+                        display: 'flex',
+                        position: 'relative'
+                    }}>
+                        <Image
+                            width={250}
+                            src={profile.photos.large || userPhoto}
+                            style={{borderRadius: '10px'}}
+                        />
+                        {isOwner &&
+                            <>
+                                <label style={{
+                                    border: '1px solid #ccc',
+                                    display: 'inline-block',
+                                    padding: '6px 6px',
+                                    bottom: '0',
+                                    background: 'white',
+                                    left: '0',
+                                    margin: '10px',
+                                    cursor: 'pointer',
+                                    borderRadius: '5px',
+                                    position: 'absolute'
+                                }}>
+                                    <input type="file" style={{display: 'none'}} onChange={onChangePhotoSelected}/>Upload
+                                    image
+                                </label>
+                            </>
+                        }
+                        <ProfileStatus statusText={status} isOwner={isOwner}/>
+                    </div>
+                    {editMode
+                        ?
+                        <ProfileBlockInfoEdit profile={profile}
+                                              onSubmit={onSubmit}
+                                              goToEditMode={goToEditMode}
+                        />
+                        :
+                        <ProfileBlockInfo profile={profile}
+                                          isOwner={isOwner}
+                                          goToEditMode={goToEditMode}
+                        />}
+                </>
+
+            }
         </>
     )
 }
@@ -73,7 +81,7 @@ export const ProfileInfo = ({profile, status, isOwner}) => {
 const ProfileBlockInfo = ({profile, isOwner, goToEditMode}) => {
     return <div>
         {isOwner &&
-            <Button onClick={goToEditMode} style={{margin: "10px"}}>Edit profile</Button>
+            <Button onClick={goToEditMode} style={{margin: '10px'}}>Edit profile</Button>
         }
         <Divider orientation="left">User Info:</Divider>
 

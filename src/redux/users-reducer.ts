@@ -8,7 +8,7 @@ const UNFOLLOW_BUTTON = 'UNFOLLOW_BUTTON'
 const SET_USERS = 'SET_USERS'
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
-const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
+export const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'
 
 type followSuccessType = { type: typeof FOLLOW_BUTTON, userId: number }
@@ -111,9 +111,9 @@ export const requestUsers = (page: any, pageSize: any) => {
         dispatch(setCurrentPage(page))
 
         const data = await getAPI.getUsers(page, pageSize)
-        dispatch(toggleIsFetching(false))
         dispatch(setUsers(data.items));
         dispatch(setTotalUsersCount(data.totalCount));
+        dispatch(toggleIsFetching(false))
     }
 }
 

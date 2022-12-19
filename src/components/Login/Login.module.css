@@ -1,0 +1,25 @@
+.title {
+    width: 100px;
+    margin: 0 auto;
+    font-size: 24px;
+}
+
+.text {
+    font-size: 20px;
+    font-weight: 300;
+    margin: 20px;
+    line-height: 24px;
+}
+
+.text a {
+    margin: 0 10px;
+    font-weight: 600;
+}
+
+.dataText {
+    font-size: 18px;
+}
+
+.dataText div span {
+    font-weight: 600;
+}

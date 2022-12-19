@@ -1,6 +1,6 @@
 import {profileAPI} from '../api/api';
 import {stopSubmit} from 'redux-form';
-import { photosType } from './users-reducer';
+import {photosType, TOGGLE_IS_FETCHING} from './users-reducer';
 import {appStateType} from './redux-store';
 
 //types
@@ -43,6 +43,8 @@ type savePhotoSuccessType = {
     type: typeof SAVE_PHOTO_SUCCESS,
     photos: photosType
 }
+type toggleIsFetchingType = { type: typeof TOGGLE_IS_FETCHING, isFetching: boolean }
+
 
 // selector
 export const geProfileSelector = (state: appStateType) => {
@@ -58,6 +60,7 @@ let initialState = {
     ] as Array<postType>,
     profile: null as null | profileType,
     status: '',
+    isFetching: false
 }
 
 //reducer
@@ -94,6 +97,9 @@ export const profileReducer = (state: profileStateType = initialState, action: a
                 profile: {...state.profile, photos: action.photos}
             }
         }
+        case TOGGLE_IS_FETCHING: {
+            return {...state, isFetching: action.isFetching}
+        }
         default:
             return state;
     }
@@ -104,18 +110,24 @@ export const addPostAC = (values: string): addPostACType => ({type: ADD_POST, va
 const setUserProfile = (profile: profileType): setUserProfileType => ({type: SET_USER_PROFILE, profile})
 const setStatus = (status: string): setStatusType => ({type: SET_STATUS, status})
 const savePhotoSuccess = (photos: photosType): savePhotoSuccessType => ({type: SAVE_PHOTO_SUCCESS, photos})
+export const toggleIsFetching = (isFetching: boolean): toggleIsFetchingType => ({type: TOGGLE_IS_FETCHING, isFetching})
 
 //thanks
 export const getUserProfile = (userId: number) => async (dispatch: any) => {
+    dispatch(toggleIsFetching(true))
     const response = await profileAPI.getProfile(userId)
     dispatch(setUserProfile(response.data));
+    dispatch(toggleIsFetching(false))
 }
 
 export const getStatus = (userId: number) => async (dispatch: any) => {
+    dispatch(toggleIsFetching(true))
     const response = await profileAPI.getStatus(userId)
     dispatch(setStatus(response.data));
+    dispatch(toggleIsFetching(false))
 }
 export const updateStatus = (status: string) => async (dispatch: any) => {
+    dispatch(toggleIsFetching(true))
     try {
         const response = await profileAPI.updateStatus(status)
         if (response.data.resultCode === 0) {
@@ -124,15 +136,20 @@ export const updateStatus = (status: string) => async (dispatch: any) => {
     } catch (error) {
         //some error we can add dispatch
     }
+    dispatch(toggleIsFetching(false))
 }
 export const savePhoto = (file: any) => async (dispatch: any) => {
+    dispatch(toggleIsFetching(true))
     // @ts-ignore
     const response = await profileAPI.savePhoto(file);
     if (response.data.resultCode === 0) {
         dispatch(savePhotoSuccess(response.data.data.photos));
     }
+    dispatch(toggleIsFetching(false))
+
 }
 export const saveProfile = (profileData: any) => async (dispatch: any, getState: any) => {
+    dispatch(toggleIsFetching(true))
     const userId = getState().auth.id;
     // @ts-ignore
     const response = await profileAPI.saveProfile(profileData);
@@ -142,4 +159,5 @@ export const saveProfile = (profileData: any) => async (dispatch: any, getState:
         dispatch(stopSubmit('edit-profile', {_error: response.data.messages[0]}))
         return Promise.reject(response.data.messages[0])
     }
+    dispatch(toggleIsFetching(false))
 }

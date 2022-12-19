@@ -18,10 +18,13 @@ export const HeaderContainer = () => {
             <div style={{
                 color: 'white',
                 display: 'flex',
-                justifyContent: 'flex-end',
+                justifyContent: 'space-between',
                 alignItems: 'center',
                 fontSize: '16px',
             }}>
+                <Link to={'/profile/22810'}>
+                    <Button>Show Author Page</Button>
+                </Link>
                 {isAuth
                     ?
                     <div>Hello, {login} - <Button onClick={logoutHandler}>Log out</Button></div>

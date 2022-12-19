@@ -1,17 +1,19 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {Button, Card} from 'antd';
+import UserWithoutPhoto from '../../assets/images/UserWithoutPhoto.png'
 
-export const userPhoto = 'https://www.pngitem.com/pimgs/m/80-800194_transparent-users-icon-png-flat-user-icon-png.png'
-let User = ({user, followingInProgress, unFollow, follow, ...props}) => {
+export const userPhoto = UserWithoutPhoto
+
+let User = ({user, followingInProgress, unFollow, follow}) => {
     const {Meta} = Card;
 
     return <Card
         hoverable
         style={{
             width: 240,
-            justifySelf: "center",
-            margin: "20px 0"
+            justifySelf: 'center',
+            margin: '20px 0'
         }}
         cover={<Link to={'/profile/' + user.id}>
             <img style={{width: '100%'}}
