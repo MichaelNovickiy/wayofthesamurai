@@ -1,14 +1,13 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {login} from '../../redux/auth-reducer';
+import {geAuthSelector, login} from '../../redux/auth-reducer';
 import {Navigate} from 'react-router-dom';
 import {Button, Checkbox, Form, Input} from 'antd';
 import style from './Login.module.css'
 
 const Login = () => {
-    const isAuth = useSelector((state) => state.auth.isAuth)
-    const captchaUrl = useSelector((state) => state.auth.captchaUrl)
-    const errorMessage = useSelector((state) => state.auth.error)
+    const {isAuth, captchaUrl, error} = useSelector(state => geAuthSelector(state))
+    const errorMessage = error
 
     const dispatch = useDispatch()
 

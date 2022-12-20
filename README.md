@@ -7,11 +7,13 @@
 * Redux
 * TypeScript
 * JavaScript
-* RestAPI
 * HTML/CSS
-* class component
-* HOC, connect()
-* functional components
+* RestAPI
+* Axios
 * Ant design
+* Class component
+  * HOC, connect()
+* Functional components
+  * React hooks
 
 ##### Link to [YouTube course](https://www.youtube.com/watch?v=gb7gMluAeao&list=PLcvhF2Wqh7DNVy1OCUpG3i5lyxyBWhGZ8&ab_channel=IT-KAMASUTRA)

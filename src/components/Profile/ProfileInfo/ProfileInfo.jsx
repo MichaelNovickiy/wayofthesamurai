@@ -79,6 +79,16 @@ export const ProfileInfo = ({profile, status, isOwner}) => {
 }
 
 const ProfileBlockInfo = ({profile, isOwner, goToEditMode}) => {
+
+    const keys = Object.keys(profile.contacts)
+    let arr = []
+
+    for (let i = 0; i < keys.length; i++) {
+        if (profile.contacts[keys[i]] != null) {
+            arr.push(profile.contacts[keys[i]])
+        }
+    }
+
     return <div>
         {isOwner &&
             <Button onClick={goToEditMode} style={{margin: '10px'}}>Edit profile</Button>
@@ -93,12 +103,17 @@ const ProfileBlockInfo = ({profile, isOwner, goToEditMode}) => {
             {profile.aboutMe && <Descriptions.Item label="About me:">{profile.aboutMe}</Descriptions.Item>}
         </Descriptions>
 
-        <Divider orientation="left">Contacts:</Divider>
-        <ul>
-            {Object.keys(profile.contacts).map(contact => {
-                return <Contact key={contact} contactTitle={contact} contactValue={profile.contacts[contact]}/>
-            })}
-        </ul>
+        {arr != false
+            &&
+            <>
+                <Divider orientation="left">Contacts:</Divider>
+                <ul>
+                    {Object.keys(profile.contacts).map(contact => {
+                        return <Contact key={contact} contactTitle={contact} contactValue={profile.contacts[contact]}/>
+                    })}
+                </ul>
+            </>
+        }
     </div>
 }
 
